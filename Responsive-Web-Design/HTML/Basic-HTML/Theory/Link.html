@@ -86,3 +86,36 @@ quando stai linkando risorso all'interno dello stesso sito web. Usa un percorso
 relativo se vuoi mantenere il tuo codice pulito e più facile da mantenere
 durante lo sviluppo. Usa un percorso relativo durante i test locali per
 assicurarti che i link funzionino senza una connessione ad internet.
+
+<!-- * Qual è la Differenze Tra Barre, Punti Singoli e Doppi Punti Nella Sintassi del Percorso -->
+
+Potresti aver visto link come "/public/logo.png", "./script.js" oppure
+"../styles.css" nel tempo. Queste si chiamano percorsi file. Ci sono 3 sintassi
+importanti da sapere. La prima è la barra, che può essere "\" oppure "/" in base
+a che sistema operativo tu stia usando. Il secondo è il punto ".". Ed infine
+abbiamo i doppi punti "..". La barra, conosciuta come "separatore di percorso".
+Viene usata per indicare una pausa nel testo tra cartelle o nomi di file. Questo
+è il modo in cui il tuo computer sa che "naomis-files/" punta ad una cartella
+con lo stesso nome, mentre "naomis/files/" punta alla cartella "files" dentro la
+cartella "naomis". Un punto singolo punta alla cartella attuale, i due punti
+invece puntano alla cartella padre. Tipicamente vedrai il punto singolo usato
+per assicurarsi che il percorso sia riconosciuto come un percorso relativo. I
+doppi punti invece sono molto comunemente usati per accedere a file al di fuori
+della cartella attuale.
+
+<!--
+my-app/
+├─ public/
+│  ├─ favicon.ico
+│  ├─ index.html
+├─ src/
+│  ├─ index.css
+│  ├─ index.js
+-->
+
+Se il tuo file "public/index.html" ha bisogno di caricare il file "favicon.ico",
+useresti un percorso relativo con un singolo punto per accedere alla cartella
+corrente: "./favicon.ico". Se il tuo file "public/index.html" avesse bisogno di
+caricare il file "index.css", useresti un percorso relativo con i doppi punti
+per arrivare alla prima cartella padre "my-app", poi alla cartella "src" ed
+infine arrivare al tuo file: "../src/index.css"
