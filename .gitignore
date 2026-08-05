@@ -1,0 +1,12 @@
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+
+# Node / JavaScript
+node_modules/
+
+# Environment files
+.env
