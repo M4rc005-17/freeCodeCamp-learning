@@ -119,3 +119,112 @@ corrente: "./favicon.ico". Se il tuo file "public/index.html" avesse bisogno di
 caricare il file "index.css", useresti un percorso relativo con i doppi punti
 per arrivare alla prima cartella padre "my-app", poi alla cartella "src" ed
 infine arrivare al tuo file: "../src/index.css"
+
+<!-- * Quali Sono i Diversi Stati del Link e Perché Sono Importanti -->
+
+Potresti aver visto il link su una pagina web diventare viola dopo averlo
+cliccato. Questo perché lo stato del link è cambiato, quindi diversi stili
+vengono applicati. Ci sono 5 stati diversi per un link. Il primo è quello di
+default, che è ":link". Questo stato rappresenta un link che l'utente non ha
+ancora visitato, cliccato o interagito. Puoi pensare a questo stato come una
+base per gli stili per tutti i link sulla tua pagina. Tutti gli altri stati
+vengono costruiti al di sopra di esso.
+
+<a href="https://freecodecamp.org" target="_blank">Visit freeCodeCamp</a>
+
+Il secondo stato è ":visited", che si applica quando un utente ha già visitato
+la pagina che è stata linkata. Di default, questa interazione fa diventare il
+link viola, ma puoi modificare il CSS per dare un altro tipo di indicazione
+all'utente. Questo è utile per far capire all'utente che ha già letto una
+porzione della documentazione. Oppure che il sito è affidabile perché l'hanno
+già usato in passato.
+
+<head>
+  <title>Link</title>
+  <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+  <a href="https://freecodecamp.org" target="_blank">Visit freeCodeCamp</a>
+</body>
+
+<!--
+
+Codice CSS per cambiare il colore del link quando viene visitato
+
+a:visited {
+  color: brown;
+}
+
+-->
+
+Il terzo stato è ":hover". Questo stato si applica quando l'utente passa il
+cursore sopra al link. Questo stato è utile per dare più attenzione al link, per
+assicurarsi che l'utente abbia intenzione di cliccarlo.
+
+<head>
+  <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+  <a href="https://freecodecamp.org" target="_blank">Visit freeCodeCamp</a>
+</body>
+
+<!--
+
+Codice CSS per cambiare il colore del link quando si fa hover
+
+a:hover {
+  color: red;
+}
+
+-->
+
+Il quarto stato è ":focus". Questo stato si applica quando ci focussiamo su un
+link.
+
+<head>
+  <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+  <a href="https://freecodecamp.org" target="_blank">Visit freeCodeCamp</a>
+</body>
+
+<!--
+
+Codice CSS per cambiare il colore del link quando si fa focus
+
+a:focus {
+  color: green;
+}
+
+
+-->
+
+Ed infine il quinto stato, ":active". Questo stato si applica a link che stanno
+venendo attivati dall'utente. Questo tipicamente significa cliccare sul link con
+il tasto sinistro. Questo stato può essere d'aiuto per mostrare all'utente che
+l'elemento che hanno cliccato sia interattivo.
+
+<head>
+  <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+  <a href="https://freecodecamp.org" target="_blank">Visit freeCodeCamp</a>
+</body>
+
+<!--
+
+Codice CSS per cambiare il colore dello stato ":active"
+
+a:active {
+  color: black;
+}
+
+-->
+
+Quando usi questi stati per stilare i tuoi link, c'è un ordine specifico da
+rispettare per scrivere il CSS ovvero: "link", "visited", "hover", "focus" ed
+infine "active".
