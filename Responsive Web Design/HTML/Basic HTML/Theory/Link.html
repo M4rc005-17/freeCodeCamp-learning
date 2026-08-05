@@ -1,0 +1,26 @@
+<!doctype html>
+
+<!-- * Cosa Sono i Diversi Tipi di Attributo di Target e Come Funzionano -->
+
+Abbiamo visto l'attributo "target" sugli elementi ancora ("a") o sui "link".
+Questo attributo dice al browser dove aprire l'URL nell'elemento "a".
+
+<a href="https://freecodecamp.org" target="_blank">Visit freeCodeCamp</a>
+
+Ci sono 4 valori importanti che sono possibili per questo attributo. Ogni valore
+è preceduto da un trattino basso. Il primo valore è "_self" che è il valore di
+default. Apre il link nella stessa pagina del browser. Il secondo valore è
+"_blank", apre il link in un nuovo tab del browser. Il terzo valore è "_parent"
+che apre il link nel parente del contesto attuale. Per esempio, se il tuo sito
+web ha un "iframe" un valore "_parent" all'interno dell'"iframe" lo aprirà nella
+tab del tuo sito web e non nel frame embedded. Il quarto valore è "_top" che
+apre il link nel contesto di navigazione più alto. Questo è simile a "_parent",
+ma il collegamento si aprirà sempre nella scheda completa del browser, anche per
+frame incorporati annidati. Esiste un quinti valore chiamato "_unfencedTop",
+attualmente usato per FencedFrame API sperimentali. Selezionare il valore
+corretto del "target" controlla dove l'utente va a finire ed è una cosa
+importante da tenere in considerazione quando si crea un sito web.
+
+
+<!-- * Qual è la Differenza tra Percorsi Assoluti e Relativi -->
+

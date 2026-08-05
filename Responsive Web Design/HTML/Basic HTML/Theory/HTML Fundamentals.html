@@ -1,0 +1,187 @@
+<!doctype html>
+
+<!-- * Cosa Sono Gli Elementi Div e Quando Dovresti Usarli -->
+
+Gli elementi "div" sono usati come contenitori per raggruppare altri elementi
+
+<div>
+  <p>Esempio con elemento paragrafo</p>
+  <p>Questo è un altro esempio sempre nel paragrafo</p>
+</div>
+
+Userai l'elemento "div" principalmente per raggruppare elementi di HTML che
+condividono un set di stile CSS per esempio, se volessi dividere il tuo
+contenuto in sezioni allora l'elemento "section" sarebbe più appropriato
+rispetto all'elemento "div"
+
+<section>
+  <h2>Mammals</h2>
+  <p>
+    Mammals are warm-blooded animals with fur or hair. Most give birth to live
+    young.
+  </p>
+  <ul>
+    <li>Lion</li>
+    <li>Elephant</li>
+    <li>Dolphin</li>
+  </ul>
+</section>
+<section>
+  <h2>Aracnidi</h2>
+  <p>Gli aracnidi sono degli animali a 8 zampe</p>
+</section>
+
+l'elemento "section" ha un significato semantico rispetto all'elemento "div" che
+non è semantico La semantica è il significato delle parole o delle frasi in una
+lingua in HTML anche gli elementi hanno il proprio significato semantico Questo
+significa che se usi un elemento "section" il browser ne riconoscerà il
+significato semantico e saprà trattarlo come una sezione, su desktop, su mobile
+e altro
+
+<!-- * Cosa Sono Gli ID e Le Classi e Quando Dovresti Usarli -->
+
+l'attributo "id" aggiunge un identificatore unico ad un elemento HTML
+
+<h1 id="title">Pagine Recensioni Film</h1>
+<h2 id="subtitle">Spiderman: Brand New Day</h2>
+
+puoi usare il valore "title" dato a "id" nei file JavaScript o CSS per riferirti
+all'"id" di "title" per cambiargli il colore ad esempio
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review page Example</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <h1 id="tile">Movie Review Page</h1>
+  </body>
+</html>
+
+<!-- ! Codice CSS, qua non funziona, serve per cambiare colore -->
+
+#title { color: red; }
+
+<!-- ! per non far unire i testi -->
+
+l'hastag "#" prima del "title" dice al computer che vuoi targettare un "id" con
+quel valore i valori degli "id" non vanno usati più di una volta devono essere
+sempre unici, i valori degli "id" non possono avere spazi
+
+<h1 id="main heading">Main heading</h1>
+
+scritto in questo modo il browser vede lo spazio come parte dell'"id", questo
+porta a problemi non voluti quando bisogna fare syling e scripting. l'attributo
+"id" deve contenere solo lettere, numeri, underscore e trattini. in contrasto
+rispetto all'attributo "id", i valori dell'attributo "class" non devono essere
+unici e possono contenere spazi
+
+<div class="box"></div>
+
+se volessi aggiungere nomi di classi multipli lo puoi fare separando i nomi da
+uno spazio
+
+<div class="box red-box"></div>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Colored boxes example</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="box red-box"></div>
+    <div class="box blue-box"></div>
+    <div class="box red-box"></div>
+    <div class="box blue-box"></div>
+  </body>
+</html>
+
+<!-- ! Codice CSS, qua non funziona, serve per ridemisionare il box -->
+
+.box { width: 100px; height: 100px; }
+
+<!-- ! Codice CSS, qua non funziona, serve per cambiare colore -->
+
+.red-box { background-color: red; }
+
+<!-- ! Codice CSS, qua non funziona, serve per cambiare colore -->
+
+.blue-box { background-color: blue; }
+
+<!-- ! per non far unire i testi -->
+
+l'attributo "class" è meglio usarlo quando vuoi applicare un certo stile a
+diversi elementi, mentre se vuoi targettare un elemento specifico allora è
+meglio usare l'attributo "id"
+
+<!-- * Cosa Sono le Entità HTML e Quali Sono Alcuni Esempi Comuni -->
+
+un entità HTML, o character reference, è un insieme di caratteri usati per
+rappresentare un carattere riservato in HTML diciamo tu voglia mettere a video
+il testo "questo è un elemento <img />", scritto così non ti darà il risultato
+desiderato anche se dovessi aggiungere gli attributi "src" e "alt" farebbe
+vedere solo l'immagine in mezzo al paragrafo, non il risultato desiderato.
+
+<p>This is an <img /> element</p>
+
+quando HTML vede il simbolo minore seguito dal nome di un tag HTML, lo
+interpreta come un elemento HTML. questo è il motivo per cui non si ha il
+risultato desiderato sullo schermo per risolvere questo problema possiamo usare
+le entità HTML
+
+<p>This is an &lt;img /&gt; element</p>
+
+questi tipi di character reference sono conosciute come "named character
+references". "Named references" iniziano con una "&" e finisco con un ";".
+usando una "named character reference" HTML non si confonderà con un elemento
+HTML e ti darà il risultato desiderato Un altro tipo di character reference è la
+"decimal numeric reference". questa "character reference" inizia con un "&" e un
+"#" seguito da uno o più numeri decimali, seguito da un ";"
+
+<!-- ? Esempi -->
+
+&#60; &#169; &#174;
+
+<!-- ! Per evitare che si attacchino -->
+
+l'ultimo tipo di "character reference" sarebbero le "hexadecimal numeric
+reference". questa "character reference" inizia con una "&", un "#" e la lettera
+"x" poi è seguito da uno o più numeri esadecimali ASCII e finisce con un ";"
+
+<!-- ? Esempi -->
+
+&#x20AC; &#x03A9; &#x3C;
+
+<!-- ! Per evitare che si attacchino -->
+
+<!-- * Cos'è Il Ruolo Dell'Elemento Script in HTML e Come Può Essere Usato Per Linkarsi a File JavaScript Esterni-->
+
+l'elemento "script" è usato per includere codice eseguibile, molti developer lo
+usano per eseguire codice JavaScript. JavaScript è usato per aggiungere
+interattività alla pagina web. alcuni esempi comuni sono: giochi interattivi,
+slider per le immagini, form dinamici che valutano l'input dell'utente in tempo
+reale.
+
+<body>
+  <script>
+    alert("Welcome to freeCodeCamp");
+  </script>
+</body>
+
+tecnicamente potresti scrivere tutto il tuo codice JavaScript all'interno
+dell'elemento "script", ma è considerata una pratica migliore il linkare un file
+JavaScript esterno
+
+<script src="path-to-javascript-file.js"></script>
+
+l'aatributo "src" serve per specificare dove si trova il file JavaScript, "src"
+significa "source". il motivo per cui non si mette il codice JavaScript
+all'interno del file HTML è per una questione di "separazioni", è un principio
+di design dove si separa il proprio programma in diverse sezioni distinte, in
+questo caso vogliamo separare il codice JavaScript dal codice HTML

@@ -1,0 +1,146 @@
+<!doctype html>
+
+<!-- * Qual è il Ruolo Dell'Elemento "Link" e Come Viene Usato -->
+
+l'elemento "link" è usato per linkarsi a risorse esterne come sylesheet e icone
+del sito
+
+<link rel="sylesheet" href="./style.css" />
+
+l'attributo "rel" è usato per specificare la relazione tra la risorsa linkata e
+il documento HTML in questo caso dobbiamo specificare che la risorsa è uno
+"stylesheet" è meglio separare in due file diversi la parte di HTML e la parte
+di CSS, si utilizza poi il "link" per collegare il file CSS al file HTML,
+anziché scrivere tutto sull'HTML l'attributo "href" è usato per specificare la
+posizione della risorsa il "./" dice al computer di cercare il file "style.css"
+nella stessa cartella di dove si trova il file HTML da cui è stata chiamato il
+"link" l'elemento "link" dovrebbe essere messo all'interno dell'elemento "head"
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Esempio dell'elemento "link"</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+spesso si potrebbero vedere "link" multipli che linkano a stylesheet, fonts and
+icone differenti
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap"
+  rel="stylesheet"
+/>
+
+Google Fonts sono un set di font custom gratis e open source che si possono
+usare all'interno di qualsiasi progetto, si può scegliere il font che piace di
+più e Google ti fornirà i codici HTML e CSS necessari Nell'esempio il valore
+"preconnect" dell'attributo "rel" serve per dire al browser di creare una early
+connection al valore specificato nell'attributo "href", questo serve per
+velocizzare i tempi di caricamento di queste risorse esterne un altro utilizzo
+comune dell'elemento "link" è facendo il link a delle icone
+
+<link rel="icon" href="favicon.ico" />
+
+"favicon" è il breve di "favorite icon" è una piccola icona che viene messa sul
+tab del browser affianco al titolo del sito
+
+<!-- * Cos'è un HTML Boilerplate e Perché è Importante -->
+
+impariamo l'HTML boilerplate, cos'è l'HTML boilerplate? e tipo un tamplate già
+fatto per le pagine web, è come se fosse le fondamenta di una casa. il
+boilerplate include le strutture base ed essenziali che ogni documento HTML
+dovrebbe avere
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>freeCodeCamp</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body></body>
+</html>
+
+dato questo esempio vediamo di fare un brakedown delle varie parti per primo la
+dichiarazione "DOCTYPE"
+
+<!doctype html>
+
+dice al browser quale versione di HTML stai usando il prossimo è il tag "html"
+
+<!doctype html>
+<html lang="en">
+  <!--All other elements go inside here-->
+</html>
+
+questo sta intorno a tutto il tuo contenuto e può anche specificare la lingua
+della tua pagina, all'interno del tag "html" troverai due sezioni principali: la
+"head" ed il "body"
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--Important metadata goes here-->
+  </head>
+  <body>
+    <!--Headings, paragraphs, images, etc. go inside here-->
+  </body>
+</html>
+
+la sezione "head" contiene informazioni importanti del tipo 'behind-the-scenes'
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Title Goes Here</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+i metadata del tuo sito, contenuti negli elementi "meta", hanno dettagli a
+proposito di code come codifica dei caratteri e come i siti dovrebbero mostrare
+l'anteprima del collegamento alla tua pagina. il titolo del tuo sito si trova
+nell'elemento "title" determina il testo che appare nel tab o finestra del
+browser infine, tipicamente linki gli stylesheet esterni della tua pagine nella
+"head" usando elementi "link" la sezione del "body" è dove tutto il tuo
+contenuto va messo
+
+<body>
+  <h1>I am a main title</h1>
+  <p>Example paragraph text</p>
+</body>
+
+il boilerplate serve per strutturare correttamente la tua pagina web per fare in
+modo che funzioni correttamente anche su browser diversi, quando si inizia un
+nuovo progetto è un ottimo punto di partenza
+
+<!-- * Cos'è La Codifica UTF-8 e Perché è Importante -->
+
+UTF-8 è una codifica dei caratteri standardizzata ampiamente usata sul web. la
+codifica dei caratteri è il metodo che i computer usano per conservare caratteri
+come dati. essenzialmente tutti i testi su una pagina web sono una sequenza di
+caratteri salvati come uno o pià bytes. un byte sono 8 bit UTF-8 supporta
+qualsiasi carattere nello UNICODE
+
+<meta charset="UTF-8" />
+
+questo è come si usa l'elemento "meta" con l'attributo "charset" per settare la
+codifica dei caratteri a UTF-8 settando la codifica dei caratteri ti assicuri
+che la e accentanta verrà mostrata correttamente sulla pagina web
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examples of the UTF-8 encoding</title>
+  </head>
+  <body>
+    <p>Café</p>
+  </body>
+</html>
+
+per ogni nuovo progetto devi includere questo elemento "meta" con l'attributo
+"charset" settato a "UTF-8"
