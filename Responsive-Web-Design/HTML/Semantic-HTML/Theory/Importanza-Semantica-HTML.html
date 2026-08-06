@@ -1,0 +1,132 @@
+<!doctype html>
+
+<!-- * Perché ti Dovrebbe Importare Della Semantica di HTML -->
+
+Semantica in un linguaggio sta ad indicare il significato di parole o frasi. In
+HTML, ogni elemento ha una propria semantica. Puoi pensare al tuo documento di
+HTML come se fosse un normalissimo documento di testo. Il significato semantico
+di un elemento si riferisce all'informazione speciale che quell'elemento
+fornisce. Il significato dell'elemento "p" è paragrafo di testo
+
+<p>
+  Let me tell you about my fantastic holiday in Paris. I saw the impressive
+  Eiffel Tower up close!
+</p>
+
+La maggior parte degli elementi ha un significato semantico. L'elemento "div" è
+uno dei pochi che non ha un significato semantico. Quindi perché è importante?
+Per prima cosa, usare nel modo corretto la semantica di HTML assicura
+l'esperienza migliore per gli utenti con tecnologie assistive tipo i lettori di
+schermo. Ma la semantica di HTML ti permette anche di scalare i ranking del SEO.
+Infine, usare una corretta semantica degli elementi può migliorare anche la tua
+esperienza di programmazione. Anziché dover cercare tra diversi elementi "div"
+per trovare la tua barra di ricerca, puoi editattare direttamente l'elemento
+"nav" e sapere ciò che stai cambiando.
+
+<!-- * Perché è Importante Avere una Buona Struttura Gerarchica -->
+
+L'aspetto più importante di una struttura gerarchica è l'utilizzo corretto degli
+elementi di heading. Gli elementi di heading sono numerati: "h1", "h2", "h3",
+"h4", "h5", "h6". Questi nuemri rappresentano il livello heading per
+quell'elemento: "h1" più importante, "h6" meno importante. Come in un documento
+di testo, non vuoi che i tuoi livelli di heading siano in un ordine sbagliato,
+come detto prima, l'elemento "h1" è il top-level heading, sulla tua pagina
+raramente me avrai più di uno e tipicamente è inserito prima di tutto il
+contenuto. L'elemento "h2" è il subheading. Deve venire dopo l'"h1" e potrebbe
+venire dopo un testo introduttivo. Puoi avere più elementi "h2" nella tua
+pagina, si usa spesso per delimitare diverse sezioni della pagina. Seguendo il
+pattern l'elemento successivo è l'"h3". Non devi mai skippare da "h1" ad "h3".
+Ma puoi avere più elementi heading allo stesso livello.
+
+<section>
+  <h1>freeCodeCamp</h1>
+  <h2>Learn Front-End Development</h2>
+  <h3>Introduction to HTML</h3>
+  <h2>Learn Back-End Development</h2>
+</section>
+
+Può essere tentante usare un tipo di heading per il suo stile tipo usare "h1"
+per i testi grandi.
+
+<article>
+  <p>Here is some</p>
+  <h1>Large Text</h1>
+</article>
+
+Invece dovresti usare l'elemento appropriato per la struttura del tuo documento
+e utilizzare CSS per ottenere lo stile che preferisci. Utilizzare la giusta
+gerarchia è importante per l'accessibilità. Tecnologie assistive, come i lettori
+di schermo, si appoggiano alla struttura della pagina per determinare come
+annunciare la pagina web all'utente. Usare un elemento "h3" subito dopo un
+elemento "h1" potrebbe creare confusione ad un utente che usa uno screen reader
+perché potrebbe pensare di aver saltato una parte della pagina data la mancanza
+dell'elemento "h2". Una struttura fatta bene è anche importante per il SEO. I
+motori di ricerca utilizzano un modo automatizzato per controllare il contenuto
+della tua pagina e determinare dove e quando farla comparire nei risultati di
+ricerca. Se la struttura è fatta male i motori di ricerca allora faranno fatica
+a rankarti correttamente. Infine, in base a quanto è incorretta la tua
+struttura, il tuo HTML potrebbe neanche essere valido. Quando questo accade, il
+browser deve effettivamente indovinare cosa volevi fare con la tua pagina web e
+potrebbe non indovinare ciò volevi.
+
+<!-- * Qual è la differenza tra HTML semantico e presentazionale -->
+
+HTML presentazionale si focussa sull'apparenza e lo stile del contenuto. Nei
+primi giorni di HTML gli sviluppatori usavano elementi come "center", "big" e
+"font". Ma nel web development moderno non dovresti usare questo tipo di
+elementi, data la loro limitazione e impatto negativo sull'accessibilità e
+mantenibilità. Molti elementi dell'HTML presentazionale sono ormai decaduti. Ci
+sono modi migliori per avere lo stesso risultato. L'elemento "font" è un
+elemento deacduto usato per settare la dimensione del font e il colore del
+testo.
+
+<font size="5" color="blue">This text is blue and large.</font>
+
+Il range per l'attributo "size" va da 1 a 7, 1 è piccolo, 7 è grande, il valore
+di default è 3 se non indichi nulla. Questo elemento funziona ancora, ma
+dovresti usare CSS per settare dimensione e colore. L'elemento "center" è un
+altro elemento decaduto che è usato per centrare il contenuto orizontalmente
+all'interno di sè.
+
+<center>
+  This text is centered.
+  <p>HTML is awesome.</p>
+</center>
+
+<p>Another example text.</p>
+
+Successivamente, abbiamo l'elemento "big". Un altro elemento decaduto che ti
+permette di rendere il testo contenuto più grande di un livello.
+
+<p>
+  This text has a normal font size.
+  <big>This text is larger.</big>
+  Some other text.
+</p>
+
+Ricordati che la dimensione del font va sempre gestita con CSS, quindi non
+usiamo più questo elemento. Questi erano tutti esempi di HTML presentazionale,
+ma sono tutti ormai decaduti, quindi vediamo cosa usare al posto di questi
+elementi ormai sconsigliati. HTML semantico è la pratica consigliata. Descrive
+il contenuto degli elementi, quindi è molto più facile da leggere, capire e
+mantenere. I motori di ricerca posso capire molto facilmente capire il tuo sito
+web quando usi HTML semantico. È anche di aiuto per l'accessibilità perché i
+lettori di schermo hanno bisogno di informazioni semantiche per descrivere cosa
+c'è sulla tua pagina web. Questi sono alcuni esempi di HTML semantico: -
+L'elemento "header" per definire l'header del documento o sezioni. - L'elemento
+"nav" per le sezioni con i link di navigazione. - L'elemento "section" per
+raggruppare informazioni in relazione tra loro. - L'elemento "figure" per
+illustazioni e diagrammi.
+
+<header>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <!--Add the products link here-->
+    <a href="#">Products</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+Gli elementi sematici mostrano il loro compito molto chiaramente all'interno
+della struttura HTML. Ci sono molti elementi diversi nella semantica di HTML.
