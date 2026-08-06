@@ -1,1 +1,33 @@
 <!doctype html>
+
+<!-- * Quando dovresti usare l'elemento di enfasi invece dell'elemento di testo idiomatico -->
+
+Questi elementi sono molto vicini al concetto di HTML semantico e
+presentazionale. L'elemento di testo idiomatico, "i", era originariamente
+utilizzato per presentare il testo in italics. Ma adesso è usato per evidenziare
+una voce o un tono diverso, termini idiomatici da un'altra lingua, termini
+tecnici e pensieri.
+
+<p>There is a certain <i lang="fr">je ne sais quoi</i> in the air.</p>
+
+L'attributo "lang" all'interno del tag "&lt;i&gt;" è usato per specificare il
+linguaggio del contenuto. In questo caso il linguaggio è il francese. L'elemento
+"i" non indica se il testo è importante o meno, mostra semplicemente che è
+diverso in qualche modo dal testo circostante. Se hai bisogno di enfatizzare
+l'importanza di un test, puoi usare una elemento semantico simili, chiamato
+l'elemento di enfasi, "em". Questo è raccomandato se devi fornire più contesto.
+Dovresti usare questo elemento per le parti del testo che hanno bisogno di
+enfasi rispetto al resto del testo. Di solito è limitato a sole alcune parole,
+perché può alterare il significato della frase.
+
+<p>Never give up on <em>your</em> dreams.</p>
+
+Puoi vedere che la frase "Never give up on your dreams" appare tutta normale
+tranne la parola "your" che è enfatizzata perché è all'interno dell'elemento
+"em". Nel browser la parola "your" sarà in italic per dire ai lettori che è
+imporante. Anche se è il testo è identico all'elemento di testo idiomatico, la
+semantica dell'elemento di enfasi concentra il suo significato e imporanza
+dietro le quinte. È importante sapere che questi elemetne non devono essere
+usati per la presentazione. Se hai bisogno di mettere il testo in italics, ma il
+testo non ha un compito speciale, non è di particolare importanza o un
+significato particola, allora si usa CSS per mettere lo stile.
