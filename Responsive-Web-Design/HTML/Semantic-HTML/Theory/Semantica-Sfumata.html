@@ -31,3 +31,76 @@ dietro le quinte. È importante sapere che questi elemetne non devono essere
 usati per la presentazione. Se hai bisogno di mettere il testo in italics, ma il
 testo non ha un compito speciale, non è di particolare importanza o un
 significato particola, allora si usa CSS per mettere lo stile.
+
+<!-- * Quando dovresti usare l'elemento "strong" rispetto all'elemento "bring attention to" -->
+
+L'elemento "bring attention to", "b", è comunemente usato per evidenziare le
+parole chiave nei riassunti, oppure i nomi dei prodotti nelle recensioni. Di
+solito i browser mostrano questo testo in grassetto.
+
+<p>
+  We tested several products, including the <b>SuperSound 3000</b> for audio
+  quality, the <b>QuickCharge Pro</b> for fast charging, and the
+  <b>EcoClean Vacuum</b> for cleaning. The first two performed well, but the
+  <b>EcoClean Vacuum</b> did not meet expectations.
+</p>
+
+Come vedi le parti comprese tra i "b" sono in grassetto e ciò attira
+l'attenzione dell'utente. Se dovessi aver bisogno di enfatizzare l'importanza di
+un testo, dovresti usare l'elemento "strong" anziché l'elemento "b". "strong" è
+un elemento semantico di HTML che enfatizza testo ritenuto cruciale o urgente.
+
+<p><strong>Warning:</strong> This product may cause allergic reactions.</p>
+
+L'elemento "strong" comunica quel senso di urgenza. Visivamente sono entrambi
+molto simili, perché entrambi vengono scritti in grassetto. Ma il loro
+significato è diverso. L'elemento "bring attention to" attira l'attenzione su un
+testo, senza indicare alti livelli di importanza, mentre l'elemento "strong" lo
+fa. Concentra un senso di importanza o urgenza. Per scegliere tra uno e l'altro
+considera il compito di quel teste e l'importanza rispetto al contenuto che lo
+comprende.
+
+<!-- * Cosa sono le liste di descrizione e quando dovresti usarle -->
+
+Le liste di descrizione sono perfette per presentare termini e definizioni in un
+formato organizzato e facile da leggere, come in un glossario o in un vero e
+proprio dizionario, dove puoi trovare le parole con la loro definizione
+corrispondente.
+
+<dl>
+  <dt>HTML</dt>
+  <dd>HyperText Markup Language</dd>
+  <dt>CSS</dt>
+  <dd>Cascading Style Sheets</dd>
+  <dt>JS</dt>
+  <dd>JavaScript</dd>
+</dl>
+
+In questo caso i termini sono gli acronimi HTML, CSS e JS ed i dettagli sono la
+loro espansione. I dettagli possono anche essere definizioni, o altre
+informazioni relazionate al termine. Avrai bisogno di 3 elementi HTML per
+definire una lista di descrizione. Primo, l'elemento di lista di descrizione,
+"dl", che è il contenitore dell'intera lista. Poi, l'elemento di descrizione dei
+termini, "dt", per ogni termine. Infine, per ogni termine, un elemento di
+descrizione dei dettagli, "dd", per la descrizione o dettagli associati al
+termine. Nel browser vedrai ogni termine seguito dalla corrispondente
+descrizione. Di default le descrizioni sono un po' più spostate verso destra per
+differenziarle visimente. Le liste di descrizione non sono limitate ai soli
+termini e definizioni. Sono molto più versatili.
+
+<dl>
+  <dt>Flour</dt>
+  <dd>2 cups</dd>
+  <dt>Sugar</dt>
+  <dd>1/2 cup</dd>
+  <dt>Vegetable Oil</dt>
+  <dd>2 tablespoons</dd>
+</dl>
+
+Qua puoi vedere una lista per una ricetta, tutto è compreso dentro l'elemento
+"dl" poi ci sono gli elementi "dt" per i termini e gli elementi "dd" per le
+descrizioni, in questo caso le quantità. Altri casi d'uso delle liste di
+descrione sono: specifiche di un prodotto, domande fatte di frequente,
+informazioni di contatto e metadata. Essenzialmente quando si tratta di una
+mappa, ovvero valore key associato a valore value, allora possiamo usare una
+lista di descrizione.
