@@ -1,0 +1,45 @@
+/*
+le regole CSS sono composte da due parti, un "selector" e un blocco "declaration"
+selector{
+  property: value;
+}
+il "selector" targetta un elemento di HTML, usando le classi, gli id o i tipi degli elementi tipo "p" per i paragrafi.
+"background-color" è un proprietà che si può mettere dentro il blocco di "declaration" e ci si può assegnare un colore, tipo "purple".
+"color" proprietà che cambia il colore del testo
+se vuoi applicare lo stesso style a più elementi puoi metterli insieme nel "selector" separandoli con una virgola.
+gli id iniziano con "#" le classi con "."
+"hr" in HTML crea una linea.
+si può usare l'attributo "style" per CSS inline.
+si può usare il tag "style" nell'"head" per CSS internal.
+infine si possono usare file ".css" esterni da linkare al file HTML usando l'elemento "link" dentro la sezione "head".
+<link rel="stylesheet" href="styles.css">
+la scelta migliore è usare il file esterno.
+le proprietà "width" e "height" sono usate per controllare le dimensioni degli elementi.
+Si possono usare diverse unità come i pixels "px", le percentuali "%", unità viewport "vw", "vh" e altre.
+per "width" il valore di default è "auto" che espande la larghezza in base al suo contenuto, al suo parent e al suo display type.
+per un elemento "div" il valore "auto" lo fa espandere fino a riempire tutta la larghezza del suo contenitore padre.
+per la proprietà "height" è lo stesso.
+le proprietà "min-width" e "max-width" servono per mettere un limite, al di sotto di questi valori le cose non verranno rimpicciolite.
+le proprietà "max-width" e "max-height" fanno la stessa cosa ma al contrario.
+Descendant Combinator
+si usa uno spazio per separare padre e figlio, "figure img" seleziona tutte le "img" all'interno di "figure"
+"border" applica un bordo di tot "px", "solid" e colore.
+Child Combinator
+si usa con un ">" per targettare unn figlio specifico.
+".container > p" "p" è figlio diretto di ".container" quindi le modifiche saranno applicate solo su di lui.
+Next-Sibling Combinator
+si usa con un "+" serve per indicare due elementi allo stesso livello.
+"img + figcaption" sono allo stesso livello e in questo modo si può applicare lo stesso styling.
+Subsequent-Sibling Combinator
+si usa con un "~", puoi selezionare più elementi allo stesso livello.
+"h2 ~ p" "h2" e "p" sono allo stesso livello ma di elementi "p" ce ne sono 4, e vengono tutti modificati.
+RICORDARSI che soltanto il secondo elemento prende le modifiche.
+gli elementi "block-level" come "p", "h", "div", "ol", "ul", "section", occupano tutto lo spazio in larghezza, e hanno una proprietà in CSS "display: block;" di default.
+Gli elementi "inline" come "span", "a" e "img", hanno la proprietà "display: inline;" di default.
+con gli elementi "inline-block" puoi modificare l'altezza e la larghezza dell'elemento.
+"margin" controlla lo spazio al di fuori di un elemento, "padding" controlla lo spazio all'interno di un elemento.
+per mettere dello spazio al di sopra di un elemento puoi usare la proprietà "margin-top" con dei "px".
+ci sono anche le proprietà "margin-left", "margin-right" e "margin-bottom".
+puoi anche usare "margin" con numero di valori da uno a quattro per indicare le direzioni, un valore si applica a tutte le direzioni, due valori: il primo per alto e basso, il secondo per destra sinistra, tre valori: il primo alto, il secondo destra e sinistra, il terzo sotto, quattro valori: primo alto, secondo destra, terzo basso, quarto sinistra.
+stessa logica si applica a "padding" e anche le quattro proprietà separate esistono per "padding".
+*/
