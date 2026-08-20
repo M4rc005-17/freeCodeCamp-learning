@@ -1,0 +1,27 @@
+/*
+"line-height" sistema lo spazio verticale tra line di testo in una lista.
+anche se indirettamente influisce sullo spazio tra un elemento el l'altro, in realtà questa proprietà intacca solo lo spazio all'interno di un singolo elemento della lista, per influenzare tutta la lista bisogna usare comunque "padding" e "margin"
+
+"list-style" è usato per controllare lo stile delle liste.
+tre proprietà: "list-style-type", "list-style-position", "list-style-image".
+la "type" ti permette di scegliere il tipo di punto da mettere alla lista all'inizio. e anche numeri.
+la "position" ti permette di scegliere dove sono posizionati i numeri o le forme per indicare la linea della lista.
+hai due value: "inside" e "outside", la prima è più indentata mentre la seconda è a lato.
+la "image" ti permette di usare un immagine come bullet point.
+queste tre proprietà si possono unire scrivendo semplicemente "list-style" se ne hai il bisogno.
+
+quando si modifica il colore dei link assicurati di mantenere la logica dei colori.
+
+ci sono diversi stati per un link, che possono essere ripresi su CSS usando il ":" e sono: link, visited, hover, focus e active.
+quando si scrive ad esempio ":hover" questa è una pseudo classe.
+ovviamente ci deve essere un selector davanti, tipo: "a:hover".
+":link" non visitato, stato normale, di solito azzurro o blu.
+":visited" visitato, di solito viola
+":hover" quando ci passi sopra col mouse
+":focus" quando ci vai sopra con il tab. ("outline" per aggiungere una outline al link quando è focus)
+":active" quando lo clicchi.
+*/
+
+body {
+  background-color: antiquewhite;
+}
