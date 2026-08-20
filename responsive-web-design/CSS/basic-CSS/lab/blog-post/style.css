@@ -1,0 +1,76 @@
+/*
+ci sono diverse proprietà per il background: "background-size", "background-repeat", "background-position" e "background-attachment".
+con "background-image" puoi settare un'immagine tua come background.
+per la dimensione usi "background-size" e puoi usare l'attributo "contain" per scalare l'immagine.
+con "min-height" impostato a 100px ad esempio a quanto ho capito l'immagine si ripete fino a riempire tutto con varie copie.
+con invece l'attributo "cover" l'immagine viene scalata fino a riempire tutto con una sola foto grossa.
+il ripetersi delle immagini si può togliere scrivendo: "background-repeat: no-repeat;", con la "background-size" settata a "contain".
+se vuoi le ripetizione orizzontale puoi scrivere "repeat-x" per la proprietà "background-repeat", stessa cosa per "repeat-y".
+"background-position" ti permette di dire dove  vuoi posizionare l'immagine, usando parole tipo: top, bottom, left, right e center.
+puoi usare anche combinazioni tipo center top per indicare in alto in mezzo.
+"background-attachment" dice se l'immagine rimane ferma e viene spostata con la pagina.
+"scroll" di default e "fixed"
+si possono unire diverse proprietà usando semplicemente "background".
+
+"background: linear-gradient(direction, color-stop1, color-stop2, ...);"
+stiamo colorando il background con "linear-gradient", la direzione può essere un angolo tipo "45deg", una parola tipo "to right", "to bottom", o un lato/angolo.
+"color-stop" specifica il colore e la posizione in cui avviene il cambiamento di colore.
+"background: radial-gradient(shape size at position, color-stop1, color-stop2, ...)"
+"shape" descrive la forma, tipo "circle", "ellipse".
+"size" la dimensione della forma che può essere: "closest-side", "closest-corner", "farthest-side" o "farthest-corner".
+"position" determina il centro della forma, può essere specificata tramite parole: "center", "top left", "bottom right" oppure con valori precisi "50% 50%", "10px 20px".
+
+stare attenti al colore del background e del testo perché deve essere leggibile e non mettere testo sulle immagini complesse perché si farebbe fatica a leggere.
+Usa messaggi per dare informazioni e non usare colori.
+se metti audio o video di sottofondo assicurati di mettere la possibilità di mutare o mettere in pausa l'audio o video.
+
+"border" aggiunge un bordo, devi mettere i pixel, il tipo di bordo "solid" ad esempio e poi il colore.
+altri tipi di bordo sono "dotted", "dashed" e "double"
+si può usare "border-top", border-right", e così via.
+"outline" stessa sintassi di border, non intacca le dimensioni o il layout dell'elemento su cui è usato.
+"border-radius" per dare un po' di tondeggio agli angoli, va in base ai pixels.
+*/
+body {
+  background-color: silver;
+}
+
+.blog-post-card {
+  background-color: white;
+  border-radius: 10px;
+  width: 350px;
+  text-align: center;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+
+.post-img {
+  width: 100%;
+  height: auto;
+  border-bottom: 5px solid #333;
+}
+
+.post-content {
+  padding: 10px;
+}
+
+.post-title,
+.post-excerpt {
+  color: #333;
+  margin: 10px;
+}
+
+.read-more {
+  color: white;
+  background-color: #333;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.read-more:hover {
+  background-color: #555;
+}
