@@ -1,3 +1,33 @@
+/*
+attributi inline più importanti del file css
+id più importante dell'elemento stesso
+id più importante della class
+il selector * ha l'importanza minore di tutti
+internal e external hanno la stessa importanza, quello che appare dopo nel documento vince
+
+il selector universale viene usato tipo per resettare, ho l'importanza minima, viene sovrascritto da qualsiasi altra cosa, importanza (0, 0, 0, 0).
+
+i type selector sono quelli che targettano l'elemento stesso in base al tag è più importante di quello universale ma meno del resto, importanza (0, 0, 0, 1).
+
+i class selector, si usa il . per usarli, si rifanno all'attributo class degli elementi HTML, è più importante del type ma meno del resto, importanza (0, 0, 1, 0). Se mischi type e class selector ha importanza più alta, tipo: p.highlight, importanza (0, 0, 1, 1).
+
+ID selector, si richiamano con # e si rifanno all'attributo id degli elementi di HTML.
+Sono più importanti rispetto ai class, ma meno del resto, importanza (0, 1, 0, 0).
+
+la keyword "!important" è usata per dare la priorità più importante.
+tipo così: color: white !important;
+si applica a regole singole, non al selettore totale.
+però usare questa keyword può portare a problemi, quindi bisogna usarla sporadicamente.
+
+nel CSS c'è un ordine, l'ultima cosa scritta ha la precedenza perché sovrascrive, nel senso che se due selector sono identici, allora si sceglie quello che viene dopo perché sovrascrive quello prima.
+
+c'è il concetto di ereditarietà, se hai un div con dentro un p e al div assegni il colore blu anche il p allora diventerà blu.
+alcune proprietà ereditarie sono color, font-family e line-height.
+alcune proprietà non ereditarie sono: margin, padding, border e background.
+se vuoi farle ereditare devi specificare con la keyword "inherit".
+se vuoi che un figlio abbia lo stesso padding del padre allora basta scrivere: padding: inherit;
+*/
+
 body {
   background-color: rosybrown;
   font-family: Arial, sans-serif;
