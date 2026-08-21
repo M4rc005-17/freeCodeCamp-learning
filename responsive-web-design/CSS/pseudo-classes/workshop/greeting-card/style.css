@@ -1,0 +1,160 @@
+/*
+"selector:pseudo-class"
+":active" quando viene cliccato qualcosa come un link o un bottone.
+":hover" quando passi sopra a qualcosa col mouse.
+":first-child" primo elemento del padre.
+":last-child" ultimo figlio del padre
+":visited" link già visitati.
+":disabled" ti permette di mettere uno style agli elementi disabilitati.
+altre pseudo classi:
+  - ":focus"
+  - ":first-of-type"
+  - ":last-of-type"
+  - ":nth-of-type"
+  - ":modal"
+  - ":enabled"
+  - ":checked"
+  - ":required" e molti altri.
+
+":checked" ti permette di stylare i bottoni radio o checkbox quando vengono selezionati.
+"appearance" settata a none serve per eliminare lo stile di default.
+":focus-within" applicare style a degli elementi quando esso o dei suoi discendenti sono focussati.
+":enabled" per targettare bottoni di form o altri elementi che sono attualmente attivi.
+":target" per applicare stile ad un elemento che è target di un frammento di URL (la parte dell'URL dopo l'#).
+
+":required" targetta gli input che hanno l'attributo "required"
+":valid" per quegli input che seguono i criteria, ":invalid" al contrario.
+"cursor: not-allowed;" trasforma il cursore in un divieto.
+":autofill" stila gli input che il browser compila con i dati salvati.
+":optional" stila gli elementi non obbligatori
+":in-range" e ":out-of-range" stila gli elementi in base a se i loro valori sono dentro o fuori da certi range.
+
+":any-link" è una combinazione di ":link" e ":visited"
+":local-link" per lo stile dei link interni che ti collegano ad altre pagine del sito.
+":target" si può usare per la navigazione in-page
+
+tree-structural pseudo-classes ti permettono di targettare gli elementi in base alla loro posizione nell'albero del documento, ecco una lista:
+  - ":root"
+  - ":empty"
+  - ":nth-child(n)"
+  - ":nth-last-child(n)"
+  - ":first-child"
+  - ":last-child"
+  - ":only-child"
+  - ":nth-of-type"
+  - ":first-of-type"
+  - ":last-of-type"
+  - ":only-of-type"
+":root" target il livello più alto, ti permette di applicare uno stile a tutto il documento, usato anche per settare le variabili CSS.
+":empty" elementi vuoi o che hanno solo whitespace, la cosa più pratica sarebbe fare "display: none;".
+":nth-child(n)" ti permette di selezionare un figlio in base alla sua posizione, ":nth-last-child(n)" parte dal basso, "n" può essere un numero oppure "odd" o "even".
+":first-child", ":last-child" e ":only-child" targettano i primi, gli ultimi e i figli unici di tutto il documento.
+":first-of-type" e ":last-of-type" selezionano la prima e l'ultima ricorrenza di un elemento all'interno di un genitore
+":nth-of-type(n)" ti permette di selezionare un elemento all'interno di un genitore in base alla sua posizione.
+":only-of-type" seleziona un elemento che all'interno di suo padre è l'unico di quel tipo.
+
+esempi di pseudo classi funzionali:
+  - ":is()"
+  - ":where()"
+  - ":has()"
+  - ":not()"
+":is()" è utile quando vuoi stylare un gruppo di elementi che condividono alcune caratteristiche, ma non tutte.
+":where()" simile a ":is()" non aggiunge specificity
+":has()" ti permette di stylare un padre in base alla presenza di un figlio specifico.
+":not()" puoi escludere una o più eccezioni specifiche
+
+"selector::pseudo-element" sintassi degli pseudo elementi, ti permetto di stylare una parte specifica di un elemento o aggiungere contenuto senza aggiungere roba extra al file HTML.
+"::before" e "::after" inserisci contenuto prima o dopo si usa l'attributo "content" e si usa anche "position: absolute;".
+l'attributo "transition" ti permette di animare i cambiamenti mettendo "transformation" "secondi" "tipo di transizione".
+puoi usare gli pseudo elementi attaccati a delle pseudo classi tipo "selector:hover::after"
+con "transform" puoi traslare il contenuto, tipo con "translateX(n)" per spostare il contenuto sull'asse delle X e grazie a "transition" ci mette tot secondi a fare questa "transform".
+"transform" ti permette di ruotare, scalare, traslare, e altro.
+"::first-letter" targetta la prima lettera di un elemento, permettendoti di dargli uno stile.
+"::marker" ti permette di targettare i simbolini di una lista modificando il colore, il font, la grandezza e quant'altro.
+ce ne sono anche altri di pseudo elementi come: "::placeholder", "::spelling-error" e "::selection".
+*/
+body {
+  font-family: Arial, sans-serif;
+  padding: 40px;
+  text-align: center;
+  background-color: brown;
+}
+
+.card {
+  background-color: white;
+  max-width: 400px;
+  padding: 40px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px gray;
+  transition:
+    transform 0.3s,
+    background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: khaki;
+  transform: scale(1.1);
+}
+
+h1::before {
+  content: "🥳 ";
+}
+
+h1::after {
+  content: " 🥳";
+}
+
+.message {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.card-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-links a {
+  text-decoration: none;
+  font-size: 1em;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  background-color: midnightblue;
+  transition: background-color 0.3s ease;
+}
+
+.card-links a:hover {
+  background-color: orangered;
+}
+
+.card-links a:active {
+  background-color: midnightblue;
+}
+
+.card-links a:focus {
+  outline: 2px solid yellow;
+}
+
+.card-links a:visited {
+  color: crimson;
+}
+
+section {
+  margin: 20px auto;
+  max-width: 600px;
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+}
+
+section:target {
+  display: block;
+}
+
+section:hover {
+  transform: skewX(10deg);
+}
