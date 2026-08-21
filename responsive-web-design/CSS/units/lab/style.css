@@ -1,3 +1,68 @@
 /*
+pixels (px) sono un unità assoluta.
+si usano le unità assolute quando si vuole controllo preciso su la dimensione degli elementi, spaziature e layout.
+altre unità assolute:
+  - "in" inches sono 96px
+  - "cm" centimetri che sono 25.2/64 di un inch
+  - "mm" millimetri 1/10 di un cm
+  - "q" quarter millimeter 1/40 di un cm
+  - "pc" picas 1/6 di un inch
+  - "pt" points 1/72 inch
+molte di queste unità sono usate per le stampe e non per gli schermi.
 
+Le percentuali sono unità relative.
+quando usi le percentuali stai dicendo "rendi questo oggetto X% del suo contenitore", ad esempio: "width: 50%;" significa che occuperà, in questo caso, metà del contenitore.
+si adattano a varie dimensioni di schermo.
+usando "max-width" ti permette di adattare l'immagine a tutti gli schermi mantenendo però il loro aspect ratio.
+SI possono usare anche per la dimensione dei font ma è più raro.
+per spostare le cose verticalmente bisogna usare "transform" e mettere qualcosa tipo "translateY(-50%);" così da mettere l'oggetto centrato sull'asse delle Y.
+
+le unità "em" sono unità relative che si interessano della dimensione del font dell'elemento.
+se hai una font-size di 20px e un margin di 1.5em allora il margin sarà effettivamente 1.5 volte la dimensione del font quindi sarà 30px.
+"em" è utile quando si lavora con bottoni o cards, puoi assicurarti che i margini, bordi e padding vengano scalati con la dimensione del font mantenendo le proporzioni.
+"rem" scala la dimensione del font rifacendosi alla root che è HTML che ha una dimensione base di 16px, quindi 1.2rem diventerebbero 1.2 volte 16px che sarebbe 19.2px.
+"rem" sono preferiti per la tipografia perché vengono scalati con le impostazioni del browser dell'user.
+
+"vh" e "vw" sono unità relative che ti permettono di modificare la dimensione degli elementi in base alla dimensione della finestra del browser.
+"vh" significa Viewport Height, "1vh" significa 1% dell'altezza del viewport(che penso sia la finestra del browser).
+stessa cosa epr "vw", che è per la larghezza.
+100vh significa che occuperà tutta la finestra.
+"vh" e "vw" possono essere usati anche per la tipografia.
+
+con la funzione "calc()" puoi fare calcoli direttamente con CSS tipo per calcolare la dimensione basandosi sulla finestra o elementi.
+puoi usare diversi pc e % insieme? e alche altri modi? non lo so non ho capito bene.
+"width: calc(50% - 20px);" setta la larghezza al 50% e a questo 50% toglie 20px.
++ e - vanno circondati di spazi, non puoi mettere i numerini attaccati.
+anche per il * e / è raccomandato.
+se scrivi lo 0, saresti un po' un pirla però vabbè, devi mettere l'unità di misura, per forza.
+con il * uno degli operatori deve essere senza unità.
+per la divisione se metti due valori con la stessa unità l'unità si cancella e ottieni un numero senza unità che può essere usato per "line-height" o "flex-grow", se invece uno dei due operandi è senza unità allora semplicemente viene scalato e mantiene l'unità.
 */
+body {
+  padding-bottom: 50px;
+  padding-top: 50px;
+  margin: 0 auto;
+  width: 90vw;
+  min-height: calc(100vh - 100px);
+  text-align: center;
+}
+
+main {
+}
+
+.primo {
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+}
+
+.secondo {
+  display: inline-block;
+  width: 49%;
+  text-align: right;
+}
+
+hr,
+section {
+  width: 50%;
+}
