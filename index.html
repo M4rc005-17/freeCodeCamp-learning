@@ -1,538 +1,336 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
-    <title>freeCodeCamp — indice esercizi (live)</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>freeCodeCamp-learning</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  color: #1a1a1a;
+  background: #fff;
+  line-height: 1.5;
+}
+h1 { font-size: 1.4rem; margin: 0 0 .3rem; word-break: break-word; }
+#status { color: #666; font-size: .9rem; margin: 0 0 1.2rem; }
+#status.error { color: #c0392b; }
+#search {
+  width: 100%;
+  padding: .6rem .8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+}
+#breadcrumb { margin-bottom: .8rem; font-size: .95rem; color: #555; word-break: break-word; }
+#breadcrumb a { color: #0969da; text-decoration: none; }
+#breadcrumb a:hover { text-decoration: underline; }
+#breadcrumb .sep { color: #999; margin: 0 .3em; }
+.row {
+  display: block;
+  padding: .65rem .5rem;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: #1a1a1a;
+}
+.row:hover { background: #f6f8fa; }
+.row .name { font-weight: 500; }
+.row .count { color: #999; font-size: .85em; }
+.row.up { color: #555; }
+.row .context { display: block; color: #999; font-size: .8em; margin-top: .1em; }
+.notice { color: #666; font-style: italic; padding: .6rem .5rem; }
+.noscript-msg { max-width: 600px; margin: 3rem auto; padding: 1rem; text-align: center; color: #c0392b; }
+</style>
+</head>
+<body>
 
-      :root {
-        --ink: #0b0e14;
-        --panel: #11151d;
-        --wire: #2a3142;
-        --mist: #6e7681;
-        --text: #d5d9e0;
-        --warn: #ff9e64;
-      }
+<noscript><p class="noscript-msg">Questa pagina richiede JavaScript per leggere ed elencare i file dal repository GitHub.</p></noscript>
 
-      * {
-        box-sizing: border-box;
-      }
-      html {
-        color-scheme: dark;
-      }
+<header>
+  <h1>freeCodeCamp-learning</h1>
+  <p id="status">Caricamento della struttura del repository…</p>
+  <input type="text" id="search" placeholder="Cerca un esercizio in tutto il repository…" aria-label="Cerca un esercizio in tutto il repository">
+</header>
 
-      body {
-        margin: 0;
-        background: var(--ink);
-        color: var(--text);
-        font-family:
-          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
-          monospace;
-        line-height: 1.65;
-        font-size: 16px;
-      }
+<nav id="breadcrumb"></nav>
+<main id="listing"></main>
 
-      .noscript-msg {
-        max-width: 600px;
-        margin: 3rem auto;
-        padding: 1rem;
-        text-align: center;
-        color: var(--warn);
-      }
+<script>
+(function () {
+  'use strict';
 
-      header {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: clamp(2.5rem, 6vw, 4.5rem) 1.25rem 1.5rem;
-        text-align: center;
-      }
-      .prompt-line {
-        color: var(--mist);
-        margin: 0 0 0.6em;
-        font-size: 0.9em;
-      }
-      h1 {
-        font-size: clamp(1.4rem, 4vw, 2rem);
-        font-weight: 700;
-        margin: 0 0 0.5em;
-        word-break: break-word;
-      }
-      .comment {
-        color: var(--mist);
-        margin: 0;
-        font-size: 0.92em;
-      }
-      .comment.error {
-        color: var(--warn);
-      }
+  // ====================================================================
+  // CONFIGURAZIONE — già impostata sui tuoi dati, cambia solo se serve
+  var REPO_OWNER = 'M4rc005-17';
+  var REPO_NAME = 'freeCodeCamp-learning';
+  var REPO_BRANCH = 'main';
+  // ====================================================================
 
-      .search-wrap {
-        display: flex;
-        align-items: center;
-        gap: 0.5em;
-        max-width: 380px;
-        margin: 1.6em auto 0;
-        padding: 0.55em 0.9em;
-        border: 1px solid var(--wire);
-        border-radius: 6px;
-        background: var(--panel);
-        transition:
-          border-color 0.15s ease,
-          box-shadow 0.15s ease;
-      }
-      .search-wrap .glyph {
-        color: var(--mist);
-      }
-      .search-wrap:focus-within {
-        border-color: #7aa2f7;
-        box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.15);
-      }
-      #search {
-        flex: 1;
-        border: none;
-        background: transparent;
-        color: var(--text);
-        font: inherit;
-        font-size: 1rem;
-      }
-      #search:focus {
-        outline: none;
-      }
-      #search::placeholder {
-        color: var(--mist);
-      }
-      #resultsCount {
-        min-height: 1.4em;
-        margin: 0.6em 0 0;
-        color: var(--mist);
-        font-size: 0.85em;
-      }
+  var statusEl = document.getElementById('status');
+  var breadcrumbEl = document.getElementById('breadcrumb');
+  var listingEl = document.getElementById('listing');
+  var searchInput = document.getElementById('search');
 
-      main.tree {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 0.5rem 1.25rem 4rem;
-      }
+  var TREE = null;
 
-      .tree details.topic {
-        margin: 0.5em 0;
-      }
-      .tree summary {
-        cursor: pointer;
-        list-style: none;
-        padding: 0.2em 0;
-      }
-      .tree summary::-webkit-details-marker {
-        display: none;
-      }
-      .tree summary::before {
-        content: "▸";
-        display: inline-block;
-        width: 1.1em;
-        color: var(--wire);
-      }
-      .tree details[open] > summary::before {
-        content: "▾";
-      }
+  function isLinkable(filename) {
+    return /\.html?$/i.test(filename);
+  }
 
-      .tree details.topic > summary {
-        color: var(--text);
-        font-weight: 600;
-      }
-      .tree details.topic.toplevel > summary {
-        color: var(--accent);
-        font-weight: 700;
-        font-size: 1.05em;
-      }
-      .tree .count {
-        color: var(--mist);
-        font-weight: 400;
-        font-size: 0.85em;
-      }
-
-      .sub {
-        margin-left: 0.5em;
-        padding-left: 1.1em;
-        border-left: 1px solid var(--wire);
-      }
-
-      .tree ul {
-        list-style: none;
-        margin: 0 0 0.2em;
-        padding: 0;
-      }
-      .tree li {
-        margin: 0.15em 0;
-      }
-      .tree a {
-        color: var(--text);
-        text-decoration: none;
-        border-bottom: 1px solid transparent;
-        padding: 0.05em 0;
-      }
-      .tree a:hover {
-        color: #9aa5b1;
-        border-bottom-color: currentColor;
-      }
-      .tree details.toplevel a:hover {
-        color: var(--accent);
-      }
-      .tree a:focus-visible,
-      .tree summary:focus-visible {
-        outline: 2px solid var(--wire);
-        outline-offset: 2px;
-      }
-
-      .hidden {
-        display: none !important;
-      }
-
-      footer {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 1rem 1.25rem 3rem;
-        color: var(--mist);
-        font-size: 0.85em;
-      }
-
-      @media (max-width: 380px) {
-        .sub {
-          margin-left: 0.3em;
-          padding-left: 0.8em;
-        }
-        body {
-          font-size: 15px;
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          transition: none !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <noscript
-      ><p class="noscript-msg">
-        Questa pagina richiede JavaScript per leggere ed elencare i file dal
-        repository GitHub.
-      </p></noscript
-    >
-
-    <header>
-      <p class="prompt-line">$ tree freeCodeCamp/ --live</p>
-      <h1>freeCodeCamp/</h1>
-      <p class="comment" id="statusLine"># caricamento in corso…</p>
-      <search class="search-wrap">
-        <span class="glyph" aria-hidden="true">›</span>
-        <input
-          type="text"
-          id="search"
-          placeholder="Cerca un esercizio…"
-          aria-label="Cerca un esercizio"
-        />
-      </search>
-      <p id="resultsCount" aria-live="polite"></p>
-    </header>
-
-    <main class="tree" id="treeRoot"></main>
-
-    <footer>
-      <p class="comment">
-        # aggiornato automaticamente da GitHub — repository
-        <span id="repoLabel"></span>
-      </p>
-    </footer>
-
-    <script>
-      (function () {
-        "use strict";
-
-        // ====================================================================
-        // CONFIGURAZIONE — modifica queste 3 righe con i tuoi dati, poi salva
-        var REPO_OWNER = "M4rc005-17";
-        var REPO_NAME = "freeCodeCamp";
-        var REPO_BRANCH = "main";
-        // ====================================================================
-
-        var ACCENT_PALETTE = [
-          "#7aa2f7",
-          "#ff9e64",
-          "#9ece6a",
-          "#bb9af7",
-          "#f7768e",
-          "#e0af68",
-        ];
-
-        var statusLine = document.getElementById("statusLine");
-        var treeRoot = document.getElementById("treeRoot");
-        var repoLabel = document.getElementById("repoLabel");
-        var search = document.getElementById("search");
-        var resultsCount = document.getElementById("resultsCount");
-
-        repoLabel.textContent = REPO_OWNER + "/" + REPO_NAME;
-
-        function isLinkable(filename) {
-          return /\.html?$/i.test(filename);
-        }
-
-        function colorForName(name) {
-          var hash = 0;
-          for (var i = 0; i < name.length; i++) {
-            hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  function buildTree(flatList) {
+    var root = { name: '', isFile: false, children: {} };
+    flatList.forEach(function (entry) {
+      if (entry.type !== 'blob') return;
+      var parts = entry.path.split('/');
+      var node = root;
+      for (var i = 0; i < parts.length; i++) {
+        var part = parts[i];
+        var isLast = i === parts.length - 1;
+        if (isLast) {
+          if (parts.length === 1 && part.toLowerCase() === 'index.html') return;
+          var base = part.replace(/\.html?$/i, '');
+          var label = base;
+          if (base.toLowerCase() === 'index' && parts.length > 1) {
+            label = parts[parts.length - 2];
           }
-          return ACCENT_PALETTE[hash % ACCENT_PALETTE.length];
-        }
-
-        function buildTree(flatList) {
-          var root = { name: "", isFile: false, children: {} };
-          flatList.forEach(function (entry) {
-            if (entry.type !== "blob") return;
-            var parts = entry.path.split("/");
-            var node = root;
-            for (var i = 0; i < parts.length; i++) {
-              var part = parts[i];
-              var isLast = i === parts.length - 1;
-              if (isLast) {
-                if (parts.length === 1 && part.toLowerCase() === "index.html")
-                  return;
-                var base = part.replace(/\.html?$/i, "");
-                var label = base;
-                if (base.toLowerCase() === "index" && parts.length > 1) {
-                  label = parts[parts.length - 2];
-                }
-                node.children[part] = {
-                  name: part,
-                  isFile: true,
-                  path: entry.path,
-                  label: label,
-                  children: {},
-                };
-              } else {
-                if (!node.children[part]) {
-                  node.children[part] = {
-                    name: part,
-                    isFile: false,
-                    children: {},
-                  };
-                }
-                node = node.children[part];
-              }
-            }
-          });
-          return root;
-        }
-
-        function countLinkable(node) {
-          if (node.isFile) return isLinkable(node.name) ? 1 : 0;
-          var total = 0;
-          Object.keys(node.children).forEach(function (k) {
-            total += countLinkable(node.children[k]);
-          });
-          return total;
-        }
-
-        function sortedKeys(obj) {
-          return Object.keys(obj).sort(function (a, b) {
-            return a.localeCompare(b, "it", { sensitivity: "base" });
-          });
-        }
-
-        function renderLeaf(fileNode) {
-          var li = document.createElement("li");
-          var a = document.createElement("a");
-          a.href = fileNode.path;
-          a.textContent = fileNode.label;
-          li.appendChild(a);
-          return li;
-        }
-
-        function renderFolder(node, name, depth) {
-          var keys = sortedKeys(node.children);
-          var fileChildren = [];
-          var folderKeys = [];
-          keys.forEach(function (k) {
-            var child = node.children[k];
-            if (child.isFile) {
-              if (isLinkable(child.name)) fileChildren.push(child);
-            } else if (countLinkable(child) > 0) {
-              folderKeys.push(k);
-            }
-          });
-
-          if (fileChildren.length === 0 && folderKeys.length === 0) return null;
-
-          var details = document.createElement("details");
-          details.className = depth === 0 ? "topic toplevel" : "topic";
-          details.open = true;
-          if (depth === 0)
-            details.style.setProperty("--accent", colorForName(name));
-
-          var summary = document.createElement("summary");
-          var nameSpan = document.createElement("span");
-          nameSpan.textContent = name + "/";
-          var countSpan = document.createElement("span");
-          countSpan.className = "count";
-          countSpan.textContent = " (" + countLinkable(node) + ")";
-          summary.appendChild(nameSpan);
-          summary.appendChild(countSpan);
-          details.appendChild(summary);
-
-          var sub = document.createElement("div");
-          sub.className = "sub";
-
-          folderKeys.forEach(function (k) {
-            var el = renderFolder(node.children[k], k, depth + 1);
-            if (el) sub.appendChild(el);
-          });
-
-          if (fileChildren.length > 0) {
-            var ul = document.createElement("ul");
-            fileChildren.forEach(function (fc) {
-              ul.appendChild(renderLeaf(fc));
-            });
-            sub.appendChild(ul);
+          node.children[part] = { name: part, isFile: true, path: entry.path, label: label, children: {} };
+        } else {
+          if (!node.children[part]) {
+            node.children[part] = { name: part, isFile: false, children: {} };
           }
-
-          details.appendChild(sub);
-          return details;
+          node = node.children[part];
         }
+      }
+    });
+    return root;
+  }
 
-        function render(root) {
-          treeRoot.innerHTML = "";
-          var keys = sortedKeys(root.children);
-          var folderKeys = [];
-          var fileNodes = [];
-          keys.forEach(function (k) {
-            var child = root.children[k];
-            if (child.isFile) {
-              if (isLinkable(child.name)) fileNodes.push(child);
-            } else if (countLinkable(child) > 0) {
-              folderKeys.push(k);
-            }
-          });
+  function countLinkable(node) {
+    if (node.isFile) return isLinkable(node.name) ? 1 : 0;
+    var total = 0;
+    Object.keys(node.children).forEach(function (k) {
+      total += countLinkable(node.children[k]);
+    });
+    return total;
+  }
 
-          var count = 0;
-          folderKeys.forEach(function (k) {
-            var el = renderFolder(root.children[k], k, 0);
-            if (el) {
-              treeRoot.appendChild(el);
-              count++;
-            }
-          });
+  function sortedKeys(obj) {
+    return Object.keys(obj).sort(function (a, b) { return a.localeCompare(b); });
+  }
 
-          if (fileNodes.length > 0) {
-            var ul = document.createElement("ul");
-            fileNodes.forEach(function (fc) {
-              ul.appendChild(renderLeaf(fc));
-            });
-            treeRoot.appendChild(ul);
-            count++;
+  function getNodeAtPath(pathSegments) {
+    var node = TREE;
+    for (var i = 0; i < pathSegments.length; i++) {
+      if (!node || node.isFile || !node.children[pathSegments[i]]) return null;
+      node = node.children[pathSegments[i]];
+    }
+    return node;
+  }
+
+  function currentPathFromHash() {
+    var raw = location.hash.replace(/^#/, '');
+    if (!raw) return [];
+    return raw.split('/').filter(Boolean).map(function (s) {
+      try { return decodeURIComponent(s); } catch (e) { return s; }
+    });
+  }
+
+  function pathToHash(pathSegments) {
+    return pathSegments.map(encodeURIComponent).join('/');
+  }
+
+  function renderBreadcrumb(pathSegments) {
+    breadcrumbEl.innerHTML = '';
+    var home = document.createElement('a');
+    home.href = '#';
+    home.textContent = REPO_NAME;
+    breadcrumbEl.appendChild(home);
+    var acc = [];
+    pathSegments.forEach(function (seg) {
+      acc.push(seg);
+      var sep = document.createElement('span');
+      sep.className = 'sep';
+      sep.textContent = '/';
+      breadcrumbEl.appendChild(sep);
+      var a = document.createElement('a');
+      a.href = '#' + pathToHash(acc.slice());
+      a.textContent = seg;
+      breadcrumbEl.appendChild(a);
+    });
+  }
+
+  function renderListing(pathSegments) {
+    var node = getNodeAtPath(pathSegments);
+    var effectivePath = pathSegments;
+    var wasInvalid = false;
+    if (!node) {
+      wasInvalid = true;
+      var trial = pathSegments.slice();
+      while (trial.length && !getNodeAtPath(trial)) trial.pop();
+      effectivePath = trial;
+      node = getNodeAtPath(trial) || TREE;
+    }
+
+    renderBreadcrumb(effectivePath);
+    listingEl.innerHTML = '';
+
+    if (wasInvalid) {
+      var warn = document.createElement('p');
+      warn.className = 'notice';
+      warn.textContent = 'Percorso non trovato: mostro il livello disponibile più vicino.';
+      listingEl.appendChild(warn);
+    }
+
+    if (effectivePath.length > 0) {
+      var up = document.createElement('a');
+      up.href = '#' + pathToHash(effectivePath.slice(0, -1));
+      up.className = 'row up';
+      up.textContent = '⬆️ .. (torna su)';
+      listingEl.appendChild(up);
+    }
+
+    var keys = sortedKeys(node.children);
+    var folders = [];
+    var files = [];
+    keys.forEach(function (k) {
+      var child = node.children[k];
+      if (child.isFile) {
+        if (isLinkable(child.name)) files.push(child);
+      } else if (countLinkable(child) > 0) {
+        folders.push({ key: k, node: child });
+      }
+    });
+
+    if (folders.length === 0 && files.length === 0) {
+      var empty = document.createElement('p');
+      empty.className = 'notice';
+      empty.textContent = 'Questa cartella non contiene pagine .html.';
+      listingEl.appendChild(empty);
+    }
+
+    folders.forEach(function (f) {
+      var a = document.createElement('a');
+      a.href = '#' + pathToHash(effectivePath.concat([f.key]));
+      a.className = 'row';
+      a.appendChild(document.createTextNode('📁 '));
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'name';
+      nameSpan.textContent = f.key + '/';
+      a.appendChild(nameSpan);
+      a.appendChild(document.createTextNode(' '));
+      var countSpan = document.createElement('span');
+      countSpan.className = 'count';
+      countSpan.textContent = '(' + countLinkable(f.node) + ')';
+      a.appendChild(countSpan);
+      listingEl.appendChild(a);
+    });
+
+    files.forEach(function (fc) {
+      var a = document.createElement('a');
+      a.href = fc.path;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'row';
+      a.appendChild(document.createTextNode('📄 '));
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'name';
+      nameSpan.textContent = fc.label;
+      a.appendChild(nameSpan);
+      listingEl.appendChild(a);
+    });
+  }
+
+  function renderSearch(query) {
+    breadcrumbEl.innerHTML = '';
+    var label = document.createElement('span');
+    label.textContent = 'Risultati per "' + query + '"';
+    breadcrumbEl.appendChild(label);
+
+    listingEl.innerHTML = '';
+    var matches = [];
+    (function walk(node, pathParts) {
+      var keys = sortedKeys(node.children);
+      keys.forEach(function (k) {
+        var child = node.children[k];
+        if (child.isFile) {
+          if (isLinkable(child.name) && child.label.toLowerCase().indexOf(query) !== -1) {
+            matches.push({ label: child.label, path: child.path, context: pathParts.join(' / ') });
           }
-
-          return count;
+        } else {
+          walk(child, pathParts.concat([k]));
         }
+      });
+    })(TREE, []);
 
-        function setupFilter() {
-          var leaves = Array.prototype.slice.call(
-            treeRoot.querySelectorAll("li"),
-          );
-          var groups = Array.prototype.slice.call(
-            treeRoot.querySelectorAll("details"),
-          );
+    if (matches.length === 0) {
+      var empty = document.createElement('p');
+      empty.className = 'notice';
+      empty.textContent = 'Nessun risultato.';
+      listingEl.appendChild(empty);
+      return;
+    }
 
-          function run() {
-            var q = search.value.trim().toLowerCase();
-            var active = q.length > 0;
+    matches.forEach(function (m) {
+      var a = document.createElement('a');
+      a.href = m.path;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'row';
+      a.appendChild(document.createTextNode('📄 '));
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'name';
+      nameSpan.textContent = m.label;
+      a.appendChild(nameSpan);
+      var contextSpan = document.createElement('span');
+      contextSpan.className = 'context';
+      contextSpan.textContent = m.context;
+      a.appendChild(contextSpan);
+      listingEl.appendChild(a);
+    });
+  }
 
-            leaves.forEach(function (li) {
-              var match =
-                !active || li.textContent.toLowerCase().indexOf(q) !== -1;
-              li.classList.toggle("hidden", active && !match);
-            });
+  function route() {
+    if (!TREE) return;
+    var q = searchInput.value.trim().toLowerCase();
+    if (q) {
+      renderSearch(q);
+    } else {
+      renderListing(currentPathFromHash());
+    }
+  }
 
-            groups.forEach(function (d) {
-              var anyVisible = d.querySelectorAll("li:not(.hidden)").length > 0;
-              d.classList.toggle("hidden", active && !anyVisible);
-              if (active && anyVisible) d.open = true;
-            });
+  function init() {
+    var url = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/git/trees/' + REPO_BRANCH + '?recursive=1';
 
-            var visibleCount = leaves.filter(function (li) {
-              return !li.classList.contains("hidden");
-            }).length;
-            resultsCount.textContent = active
-              ? visibleCount +
-                (visibleCount === 1 ? " risultato" : " risultati")
-              : "";
-          }
+    fetch(url)
+      .then(function (res) {
+        if (res.status === 404) throw new Error('repository non trovato — controlla username, nome del repository e branch in cima al file');
+        if (res.status === 403) throw new Error('limite di richieste a GitHub raggiunto per questa ora, riprova più tardi');
+        if (!res.ok) throw new Error('errore nel contattare GitHub (codice ' + res.status + ')');
+        return res.json();
+      })
+      .then(function (data) {
+        TREE = buildTree(data.tree || []);
+        var total = countLinkable(TREE);
+        statusEl.textContent = total + (total === 1 ? ' pagina trovata' : ' pagine trovate') + ' — sempre aggiornato da GitHub' + (data.truncated ? ' (elenco troncato: repository molto grande)' : '');
+        route();
+      })
+      .catch(function (err) {
+        statusEl.textContent = 'Errore: ' + err.message;
+        statusEl.classList.add('error');
+      });
+  }
 
-          search.addEventListener("input", run);
-        }
+  window.addEventListener('hashchange', route);
+  searchInput.addEventListener('input', route);
 
-        function init() {
-          if (REPO_OWNER === "M4rc005-17") {
-            statusLine.textContent =
-              "# ricorda di inserire il tuo username GitHub nella configurazione in cima al file index.html";
-            statusLine.classList.add("error");
-            return;
-          }
+  init();
+})();
+</script>
 
-          statusLine.textContent = "# caricamento dei file dal repository…";
-          var url =
-            "https://api.github.com/repos/" +
-            REPO_OWNER +
-            "/" +
-            REPO_NAME +
-            "/git/trees/" +
-            REPO_BRANCH +
-            "?recursive=1";
-
-          fetch(url)
-            .then(function (res) {
-              if (res.status === 404)
-                throw new Error(
-                  "repository non trovato — controlla username, nome del repository e branch in cima al file index.html",
-                );
-              if (res.status === 403)
-                throw new Error(
-                  "limite di richieste a GitHub raggiunto per questa ora, riprova più tardi",
-                );
-              if (!res.ok)
-                throw new Error(
-                  "errore nel contattare GitHub (codice " + res.status + ")",
-                );
-              return res.json();
-            })
-            .then(function (data) {
-              var tree = buildTree(data.tree || []);
-              var groupCount = render(tree);
-              var leafCount = countLinkable(tree);
-              if (groupCount === 0) {
-                statusLine.textContent =
-                  "# nessuna pagina .html trovata nel repository";
-              } else {
-                statusLine.textContent =
-                  "# " +
-                  leafCount +
-                  (leafCount === 1 ? " pagina trovata" : " pagine trovate") +
-                  " — aggiornato dal vivo da GitHub" +
-                  (data.truncated
-                    ? " (elenco troncato: repository molto grande)"
-                    : "");
-              }
-              setupFilter();
-            })
-            .catch(function (err) {
-              statusLine.textContent = "# " + err.message;
-              statusLine.classList.add("error");
-            });
-        }
-
-        init();
-      })();
-    </script>
-  </body>
+</body>
 </html>
