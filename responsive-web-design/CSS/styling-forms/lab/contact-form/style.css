@@ -1,0 +1,44 @@
+body {
+  background-color: skyblue;
+}
+
+.form-container {
+  background-color: whitesmoke;
+  border-radius: 10px;
+  width: 40vw;
+  padding: 25px;
+  margin: 20% auto 0 auto;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+label {
+  color: hsl(0, 0%, 35%);
+  margin: 10px;
+  text-align: center;
+  display: block;
+}
+
+input,
+textarea {
+  width: 90%;
+  display: block;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid hsl(0, 0%, 85%);
+}
+
+button {
+  background-color: rgb(49, 186, 11);
+  color: whitesmoke;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin: 15px auto;
+}
+
+button:hover {
+  background-color: rgb(38, 144, 9);
+}
