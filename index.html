@@ -4,9 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#1a1d24">
+<meta property="og:title" content="freeCodeCamp-learning — indice esercizi">
+<meta property="og:description" content="Naviga gli esercizi del repository, sempre aggiornato dal vivo da GitHub.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%231a1d24'/%3E%3Cpath d='M5 8a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8z' fill='%235b9bf5'/%3E%3C/svg%3E">
 <title>freeCodeCamp-learning</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap');
 
 :root {
   --bg: #1a1d24;
@@ -20,10 +25,17 @@
   --file-accent: #5cc9b0;
   --file-soft: rgba(92,201,176,.16);
   --danger: #e8768a;
+  --success: #7cc98f;
 }
 
 * { box-sizing: border-box; }
-html { color-scheme: dark; }
+html { color-scheme: dark; scrollbar-color: var(--border) transparent; scrollbar-width: thin; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+::selection { background: var(--accent-soft); color: var(--text); }
 
 body {
   margin: 0;
@@ -35,9 +47,20 @@ body {
   color: var(--text);
   line-height: 1.5;
   min-height: 100vh;
+  position: relative;
 }
 
-.page { max-width: 720px; margin: 0 auto; padding: clamp(1.5rem, 5vw, 3rem) 1.25rem 4rem; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .035;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.page { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: clamp(1.5rem, 5vw, 3rem) 1.25rem 3rem; }
 
 header { margin-bottom: 1.5rem; }
 h1 {
@@ -45,12 +68,32 @@ h1 {
   font-size: clamp(1.5rem, 4vw, 1.9rem);
   font-weight: 700;
   letter-spacing: -.01em;
-  margin: 0 0 .35rem;
+  margin: 0 0 .5rem;
   word-break: break-word;
   color: #fbfcfe;
 }
-#status { color: var(--muted); font-size: .9rem; margin: 0 0 1.1rem; }
+
+.status-row { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin: 0 0 1.1rem; }
+#status { color: var(--muted); font-size: .9rem; margin: 0; }
 #status.error { color: var(--danger); }
+
+.icon-btn {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
+}
+.icon-btn svg { width: 15px; height: 15px; }
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); }
+.icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.icon-btn.spinning svg { animation: spin .8s linear infinite; }
+.icon-btn.copied { color: var(--success); border-color: var(--success); }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .search-box { position: relative; }
 .search-box svg {
@@ -78,18 +121,29 @@ h1 {
   overflow: hidden;
 }
 
-#breadcrumb {
-  display: flex; flex-wrap: wrap; align-items: center;
-  gap: .35rem; padding: 1rem 1.2rem; font-size: .9rem;
+.crumb-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  padding: .85rem 1.1rem;
   border-bottom: 1px solid var(--border);
-  color: var(--muted);
 }
-#breadcrumb a { color: var(--accent); text-decoration: none; }
-#breadcrumb a:hover { text-decoration: underline; }
+#breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem; font-size: .88rem; min-width: 0; }
+#breadcrumb a, #breadcrumb .current { padding: .22em .55em; border-radius: 999px; white-space: nowrap; }
+#breadcrumb a { color: var(--muted); text-decoration: none; }
+#breadcrumb a:hover { background: var(--card-hover); color: var(--text); }
 #breadcrumb .sep { color: #454c5c; }
-#breadcrumb .current { color: var(--text); font-weight: 600; }
+#breadcrumb .current { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
 
-#listing { padding: .5rem; }
+.stats-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  padding: .7rem 1.1rem;
+  font-size: .82rem; color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.stats-bar:empty { display: none; }
+.stats-dots { display: flex; gap: .3rem; }
+.stats-dots .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+#listing { padding: .5rem; min-height: 40px; }
 
 .row {
   display: flex;
@@ -102,8 +156,11 @@ h1 {
   text-decoration: none;
   color: var(--text);
   transition: background .12s ease, transform .12s ease;
+  animation: rowIn .28s ease backwards;
 }
+@keyframes rowIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 .row:hover { background: var(--card-hover); transform: translateX(2px); }
+.row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; background: var(--card-hover); }
 .row .icon { flex: none; width: 20px; height: 20px; }
 .row.folder .icon { color: var(--accent); }
 .row.file .icon { color: var(--file-accent); }
@@ -126,7 +183,34 @@ h1 {
 .row.up .icon { color: var(--muted); }
 
 .notice { color: var(--muted); font-style: italic; padding: 1rem 1.1rem; }
+.retry-btn {
+  margin: .5rem 1.1rem;
+  padding: .55rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-hover);
+  color: var(--text);
+  font-size: .9rem;
+  cursor: pointer;
+}
+.retry-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.skeleton-row {
+  height: 44px;
+  margin: .15rem .5rem;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--card-hover) 25%, rgba(255,255,255,.05) 37%, var(--card-hover) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 1.5rem 1rem 0; }
 .noscript-msg { max-width: 600px; margin: 3rem auto; padding: 1rem; text-align: center; color: var(--danger); }
+
+@media (prefers-reduced-motion: reduce) {
+  .row, .skeleton-row, .icon-btn.spinning svg { animation: none; }
+}
 </style>
 </head>
 <body>
@@ -136,7 +220,12 @@ h1 {
 <div class="page">
   <header>
     <h1>freeCodeCamp-learning</h1>
-    <p id="status">Caricamento della struttura del repository…</p>
+    <div class="status-row">
+      <p id="status">Caricamento della struttura del repository…</p>
+      <button type="button" id="refreshBtn" class="icon-btn" title="Aggiorna i dati da GitHub" aria-label="Aggiorna i dati da GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
+      </button>
+    </div>
     <div class="search-box">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" id="search" placeholder="Cerca un esercizio in tutto il repository…" aria-label="Cerca un esercizio in tutto il repository">
@@ -144,21 +233,34 @@ h1 {
   </header>
 
   <div class="card">
-    <nav id="breadcrumb"></nav>
+    <div class="crumb-bar">
+      <nav id="breadcrumb"></nav>
+      <button type="button" id="copyLinkBtn" class="icon-btn" title="Copia link a questa cartella" aria-label="Copia link a questa cartella">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg>
+      </button>
+    </div>
+    <div id="statsBar" class="stats-bar"></div>
     <main id="listing"></main>
   </div>
+
+  <footer>
+    <p>Generato per <strong>freeCodeCamp-learning</strong> · aggiornato dal vivo tramite le API di GitHub</p>
+  </footer>
 </div>
 
 <script>
 (function () {
   'use strict';
 
-  // ====================================================================
-  // CONFIGURAZIONE — già impostata sui tuoi dati, cambia solo se serve
+  // ============================================================
+  // CONFIGURAZIONE
+  // ============================================================
   var REPO_OWNER = 'M4rc005-17';
   var REPO_NAME = 'freeCodeCamp-learning';
   var REPO_BRANCH = 'main';
-  // ====================================================================
+  var VIEWABLE_EXTENSIONS = ['html', 'htm']; // aggiungi qui altre estensioni se vuoi (es. 'md')
+  var CACHE_KEY = 'fcc-tree-cache-v1';
+  var CACHE_TTL_MS = 5 * 60 * 1000;
 
   var KNOWN_COLORS = {
     css: '#5b9bf5', html: '#f2935c', javascript: '#e8d44d', js: '#e8d44d',
@@ -168,15 +270,48 @@ h1 {
   };
   var FALLBACK_PALETTE = ['#5b9bf5', '#f2935c', '#7cc98f', '#c792ea', '#e8768a', '#e8d44d', '#6bcbef'];
 
+  // ============================================================
+  // ELEMENTI DOM
+  // ============================================================
   var statusEl = document.getElementById('status');
+  var refreshBtn = document.getElementById('refreshBtn');
   var breadcrumbEl = document.getElementById('breadcrumb');
+  var copyLinkBtn = document.getElementById('copyLinkBtn');
+  var statsBarEl = document.getElementById('statsBar');
   var listingEl = document.getElementById('listing');
   var searchInput = document.getElementById('search');
 
   var TREE = null;
 
+  // ============================================================
+  // CACHE (sessionStorage, 5 minuti)
+  // ============================================================
+  function loadCache() {
+    try {
+      var raw = sessionStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || !parsed.timestamp || (Date.now() - parsed.timestamp) > CACHE_TTL_MS) return null;
+      return parsed;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveCache(flatList, truncated) {
+    try {
+      sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), tree: flatList, truncated: truncated }));
+    } catch (e) {
+      /* storage non disponibile, si procede comunque */
+    }
+  }
+
+  // ============================================================
+  // STRATO DATI
+  // ============================================================
   function isLinkable(filename) {
-    return /\.html?$/i.test(filename);
+    var ext = filename.split('.').pop().toLowerCase();
+    return VIEWABLE_EXTENSIONS.indexOf(ext) !== -1;
   }
 
   function colorForName(name) {
@@ -207,7 +342,7 @@ h1 {
         var isLast = i === parts.length - 1;
         if (isLast) {
           if (parts.length === 1 && part.toLowerCase() === 'index.html') return;
-          var base = part.replace(/\.html?$/i, '');
+          var base = part.replace(/\.[^.]+$/, '');
           var label = base;
           if (base.toLowerCase() === 'index' && parts.length > 1) {
             label = parts[parts.length - 2];
@@ -258,6 +393,9 @@ h1 {
     return pathSegments.map(encodeURIComponent).join('/');
   }
 
+  // ============================================================
+  // ICONE
+  // ============================================================
   function svgIcon(pathHTML) {
     var span = document.createElement('span');
     span.className = 'icon';
@@ -298,6 +436,11 @@ h1 {
     return span;
   }
 
+  var CHECK_ICON_HTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  // ============================================================
+  // RENDERING
+  // ============================================================
   function renderBreadcrumb(pathSegments) {
     breadcrumbEl.innerHTML = '';
     var home = document.createElement('a');
@@ -328,6 +471,43 @@ h1 {
     });
   }
 
+  function renderStatsBar(pathSegments) {
+    statsBarEl.innerHTML = '';
+    if (pathSegments.length > 0) return;
+
+    var keys = sortedKeys(TREE.children);
+    var folderCount = 0;
+    var totalCount = 0;
+    var dots = [];
+    keys.forEach(function (k) {
+      var child = TREE.children[k];
+      if (child.isFile) return;
+      var c = countLinkable(child);
+      if (c > 0) {
+        folderCount++;
+        totalCount += c;
+        dots.push({ key: k, color: colorForName(k) });
+      }
+    });
+
+    if (folderCount === 0) return;
+
+    var text = document.createElement('span');
+    text.textContent = folderCount + (folderCount === 1 ? ' cartella' : ' cartelle') + ' · ' + totalCount + (totalCount === 1 ? ' esercizio' : ' esercizi');
+    statsBarEl.appendChild(text);
+
+    var dotsWrap = document.createElement('span');
+    dotsWrap.className = 'stats-dots';
+    dots.forEach(function (d) {
+      var dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.style.background = d.color;
+      dot.title = d.key;
+      dotsWrap.appendChild(dot);
+    });
+    statsBarEl.appendChild(dotsWrap);
+  }
+
   function renderListing(pathSegments) {
     var node = getNodeAtPath(pathSegments);
     var effectivePath = pathSegments;
@@ -340,8 +520,12 @@ h1 {
       node = getNodeAtPath(trial) || TREE;
     }
 
+    copyLinkBtn.style.display = '';
     renderBreadcrumb(effectivePath);
+    renderStatsBar(effectivePath);
     listingEl.innerHTML = '';
+
+    var rowIndex = 0;
 
     if (wasInvalid) {
       var warn = document.createElement('p');
@@ -354,6 +538,7 @@ h1 {
       var up = document.createElement('a');
       up.href = '#' + pathToHash(effectivePath.slice(0, -1));
       up.className = 'row up';
+      up.style.animationDelay = (rowIndex++ * 25) + 'ms';
       up.appendChild(upIcon());
       var upLabel = document.createElement('span');
       upLabel.className = 'label';
@@ -380,7 +565,7 @@ h1 {
     if (folders.length === 0 && files.length === 0) {
       var empty = document.createElement('p');
       empty.className = 'notice';
-      empty.textContent = 'Questa cartella non contiene pagine .html.';
+      empty.textContent = 'Questa cartella non contiene pagine visualizzabili.';
       listingEl.appendChild(empty);
     }
 
@@ -390,6 +575,7 @@ h1 {
       a.href = '#' + pathToHash(effectivePath.concat([f.key]));
       a.className = 'row folder';
       a.style.borderLeftColor = color;
+      a.style.animationDelay = (rowIndex++ * 25) + 'ms';
 
       var icon = folderIcon();
       icon.style.color = color;
@@ -420,6 +606,7 @@ h1 {
       a.target = '_blank';
       a.rel = 'noopener';
       a.className = 'row file';
+      a.style.animationDelay = (rowIndex++ * 25) + 'ms';
       a.appendChild(fileIcon());
       var labelWrap = document.createElement('span');
       labelWrap.className = 'label';
@@ -434,6 +621,8 @@ h1 {
   }
 
   function renderSearch(query) {
+    copyLinkBtn.style.display = 'none';
+    statsBarEl.innerHTML = '';
     breadcrumbEl.innerHTML = '';
     var label = document.createElement('span');
     label.textContent = 'Risultati per "' + query + '"';
@@ -463,12 +652,13 @@ h1 {
       return;
     }
 
-    matches.forEach(function (m) {
+    matches.forEach(function (m, idx) {
       var a = document.createElement('a');
       a.href = m.path;
       a.target = '_blank';
       a.rel = 'noopener';
       a.className = 'row file';
+      a.style.animationDelay = (idx * 25) + 'ms';
       a.appendChild(fileIcon());
       var labelWrap = document.createElement('span');
       labelWrap.className = 'label';
@@ -486,6 +676,38 @@ h1 {
     });
   }
 
+  // ============================================================
+  // STATI DI CARICAMENTO / ERRORE
+  // ============================================================
+  function showSkeleton() {
+    breadcrumbEl.innerHTML = '';
+    statsBarEl.innerHTML = '';
+    listingEl.innerHTML = '';
+    for (var i = 0; i < 5; i++) {
+      var sk = document.createElement('div');
+      sk.className = 'skeleton-row';
+      sk.style.animationDelay = (i * 60) + 'ms';
+      listingEl.appendChild(sk);
+    }
+  }
+
+  function showError(message) {
+    statusEl.textContent = message;
+    statusEl.classList.add('error');
+    breadcrumbEl.innerHTML = '';
+    statsBarEl.innerHTML = '';
+    listingEl.innerHTML = '';
+    var retryBtn = document.createElement('button');
+    retryBtn.type = 'button';
+    retryBtn.className = 'retry-btn';
+    retryBtn.textContent = 'Riprova';
+    retryBtn.addEventListener('click', function () { loadTreeData(true); });
+    listingEl.appendChild(retryBtn);
+  }
+
+  // ============================================================
+  // ROUTING E RICERCA
+  // ============================================================
   function route() {
     if (!TREE) return;
     var q = searchInput.value.trim().toLowerCase();
@@ -496,7 +718,25 @@ h1 {
     }
   }
 
-  function init() {
+  // ============================================================
+  // CARICAMENTO DATI (con cache)
+  // ============================================================
+  function onTreeReady(truncated, fromCache) {
+    statusEl.classList.remove('error');
+    var total = countLinkable(TREE);
+    var when = new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+    statusEl.textContent = total + (total === 1 ? ' pagina trovata' : ' pagine trovate') +
+      (fromCache ? ' — dalla cache' : ' — aggiornato alle ' + when) +
+      (truncated ? ' (elenco troncato: repository molto grande)' : '');
+    route();
+  }
+
+  function fetchFresh() {
+    refreshBtn.classList.add('spinning');
+    showSkeleton();
+    statusEl.textContent = 'Caricamento della struttura del repository…';
+    statusEl.classList.remove('error');
+
     var url = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/git/trees/' + REPO_BRANCH + '?recursive=1';
 
     fetch(url)
@@ -507,21 +747,73 @@ h1 {
         return res.json();
       })
       .then(function (data) {
-        TREE = buildTree(data.tree || []);
-        var total = countLinkable(TREE);
-        statusEl.textContent = total + (total === 1 ? ' pagina trovata' : ' pagine trovate') + ' — sempre aggiornato da GitHub' + (data.truncated ? ' (elenco troncato: repository molto grande)' : '');
-        route();
+        var flat = data.tree || [];
+        saveCache(flat, !!data.truncated);
+        TREE = buildTree(flat);
+        refreshBtn.classList.remove('spinning');
+        onTreeReady(!!data.truncated, false);
       })
       .catch(function (err) {
-        statusEl.textContent = 'Errore: ' + err.message;
-        statusEl.classList.add('error');
+        refreshBtn.classList.remove('spinning');
+        showError(err.message);
       });
   }
 
+  function loadTreeData(forceRefresh) {
+    if (!forceRefresh) {
+      var cached = loadCache();
+      if (cached) {
+        TREE = buildTree(cached.tree);
+        onTreeReady(cached.truncated, true);
+        return;
+      }
+    }
+    fetchFresh();
+  }
+
+  // ============================================================
+  // INTERAZIONI EXTRA (aggiorna, copia link, tastiera)
+  // ============================================================
+  refreshBtn.addEventListener('click', function () { loadTreeData(true); });
+
+  copyLinkBtn.addEventListener('click', function () {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+    navigator.clipboard.writeText(location.href).then(function () {
+      var original = copyLinkBtn.innerHTML;
+      copyLinkBtn.innerHTML = CHECK_ICON_HTML;
+      copyLinkBtn.classList.add('copied');
+      setTimeout(function () {
+        copyLinkBtn.innerHTML = original;
+        copyLinkBtn.classList.remove('copied');
+      }, 1500);
+    }).catch(function () {});
+  });
+
+  listingEl.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    var rows = Array.prototype.slice.call(listingEl.querySelectorAll('.row'));
+    var idx = rows.indexOf(document.activeElement);
+    if (idx === -1) return;
+    e.preventDefault();
+    var nextIdx = e.key === 'ArrowDown' ? Math.min(idx + 1, rows.length - 1) : Math.max(idx - 1, 0);
+    rows[nextIdx].focus();
+  });
+
+  searchInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      searchInput.value = '';
+      route();
+      searchInput.blur();
+    }
+  });
+
+  // ============================================================
+  // AVVIO
+  // ============================================================
   window.addEventListener('hashchange', route);
   searchInput.addEventListener('input', route);
 
-  init();
+  loadTreeData(false);
 })();
 </script>
 
