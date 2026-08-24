@@ -594,6 +594,21 @@
           "#6bcbef",
         ];
 
+        // icone dedicate: chiave = nome cartella normalizzato, per il resto si usa la cartella normale colorata
+        var ICON_GLYPHS = {
+          css: { fg: "#ffffff", text: "#", size: 14 },
+          html: { fg: "#ffffff", text: "&lt;/&gt;", size: 8.5 },
+          javascript: { fg: "#1a1d24", text: "JS", size: 10 },
+          js: { fg: "#1a1d24", text: "JS", size: 10 },
+          typescript: { fg: "#ffffff", text: "TS", size: 10 },
+          ts: { fg: "#ffffff", text: "TS", size: 10 },
+          python: { fg: "#ffffff", text: "PY", size: 9.5 },
+          react: { fg: "#ffffff", shape: "atom" },
+          sql: { fg: "#ffffff", shape: "db" },
+          node: { fg: "#ffffff", shape: "hex" },
+          nodejs: { fg: "#ffffff", shape: "hex" },
+        };
+
         // ============================================================
         // ELEMENTI DOM
         // ============================================================
@@ -831,6 +846,79 @@
         var CHECK_ICON_HTML =
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
+        function badgeIcon(bg, fg, glyphSvg) {
+          var span = document.createElement("span");
+          span.className = "icon";
+          span.setAttribute("aria-hidden", "true");
+          span.innerHTML =
+            '<svg viewBox="0 0 24 24">' +
+            '<rect x="2" y="2" width="20" height="20" rx="6" fill="' +
+            bg +
+            '"/>' +
+            glyphSvg +
+            "</svg>";
+          return span;
+        }
+
+        function textGlyph(fg, str, size) {
+          return (
+            '<text x="12" y="16.3" font-size="' +
+            size +
+            '" font-weight="800" text-anchor="middle" font-family="Sora, -apple-system, Arial, sans-serif" fill="' +
+            fg +
+            '">' +
+            str +
+            "</text>"
+          );
+        }
+
+        function atomGlyph(fg) {
+          return (
+            '<g fill="none" stroke="' +
+            fg +
+            '" stroke-width="1.3">' +
+            '<ellipse cx="12" cy="12" rx="7.5" ry="2.8"/>' +
+            '<ellipse cx="12" cy="12" rx="7.5" ry="2.8" transform="rotate(60 12 12)"/>' +
+            '<ellipse cx="12" cy="12" rx="7.5" ry="2.8" transform="rotate(120 12 12)"/>' +
+            '</g><circle cx="12" cy="12" r="1.6" fill="' +
+            fg +
+            '"/>'
+          );
+        }
+
+        function dbGlyph(fg) {
+          return (
+            '<g fill="none" stroke="' +
+            fg +
+            '" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">' +
+            '<ellipse cx="12" cy="7.5" rx="5.5" ry="2.2"/>' +
+            '<path d="M6.5 7.5v9c0 1.2 2.5 2.2 5.5 2.2s5.5-1 5.5-2.2v-9"/>' +
+            '<path d="M6.5 12.3c0 1.2 2.5 2.2 5.5 2.2s5.5-1 5.5-2.2"/>' +
+            "</g>"
+          );
+        }
+
+        function hexGlyph(fg) {
+          return (
+            '<path d="M12 4.2l6.5 3.8v7.8L12 19.8l-6.5-4V8z" fill="none" stroke="' +
+            fg +
+            '" stroke-width="1.4" stroke-linejoin="round"/>'
+          );
+        }
+
+        function folderIconFor(name) {
+          var key = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+          var g = ICON_GLYPHS[key];
+          if (!g) return null;
+          var bg = colorForName(name);
+          if (g.shape === "atom") return badgeIcon(bg, g.fg, atomGlyph(g.fg));
+          if (g.shape === "db") return badgeIcon(bg, g.fg, dbGlyph(g.fg));
+          if (g.shape === "hex") return badgeIcon(bg, g.fg, hexGlyph(g.fg));
+          if (g.text)
+            return badgeIcon(bg, g.fg, textGlyph(g.fg, g.text, g.size));
+          return null;
+        }
+
         // ============================================================
         // RENDERING
         // ============================================================
@@ -891,7 +979,7 @@
             (folderCount === 1 ? " cartella" : " cartelle") +
             " · " +
             totalCount +
-            (totalCount === 1 ? " file" : " file");
+            " file";
           statsBarEl.appendChild(text);
 
           var dotsWrap = document.createElement("span");
@@ -997,9 +1085,14 @@
             a.style.borderLeftColor = color;
             a.style.animationDelay = rowIndex++ * 25 + "ms";
 
-            var icon = folderIcon();
-            icon.style.color = color;
-            a.appendChild(icon);
+            var icon = folderIconFor(f.key);
+            if (icon) {
+              a.appendChild(icon);
+            } else {
+              var plainIcon = folderIcon();
+              plainIcon.style.color = color;
+              a.appendChild(plainIcon);
+            }
 
             var labelWrap = document.createElement("span");
             labelWrap.className = "label";
