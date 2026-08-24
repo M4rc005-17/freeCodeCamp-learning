@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#1a1d24" />
-    <meta
-      property="og:title"
-      content="freeCodeCamp-learning — indice esercizi"
-    />
+    <meta property="og:title" content="freeCodeCamp — indice esercizi" />
     <meta
       property="og:description"
       content="Naviga gli esercizi del repository, sempre aggiornato dal vivo da GitHub."
@@ -24,7 +21,7 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%231a1d24'/%3E%3Cpath d='M5 8a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8z' fill='%235b9bf5'/%3E%3C/svg%3E"
     />
-    <title>freeCodeCamp-learning</title>
+    <title>freeCodeCamp</title>
     <style>
       :root {
         --bg: #1a1d24;
@@ -467,7 +464,7 @@
 
     <div class="page">
       <header>
-        <h1>freeCodeCamp-learning</h1>
+        <h1>freeCodeCamp</h1>
         <div class="status-row">
           <p id="status" aria-live="polite">
             Caricamento della struttura del repository…
@@ -549,8 +546,8 @@
 
       <footer>
         <p>
-          Generato per <strong>freeCodeCamp-learning</strong> · aggiornato dal
-          vivo tramite le API di GitHub
+          Generato per <strong>freeCodeCamp</strong> · aggiornato dal vivo
+          tramite le API di GitHub
         </p>
       </footer>
     </div>
@@ -563,11 +560,11 @@
         // CONFIGURAZIONE
         // ============================================================
         var REPO_OWNER = "M4rc005-17";
-        var REPO_NAME = "freeCodeCamp-learning";
+        var REPO_NAME = "freeCodeCamp-learning"; // nome tecnico del repository (per le chiamate API)
+        var DISPLAY_NAME = "freeCodeCamp"; // nome mostrato nel titolo, nell'intestazione e nel footer
         var REPO_BRANCH = "main";
         var VIEWABLE_EXTENSIONS = ["html", "htm"]; // aggiungi qui altre estensioni se vuoi (es. 'md')
-        var CACHE_KEY = "fcc-tree-cache-v2";
-        var CACHE_TTL_MS = 5 * 60 * 1000;
+        var CACHE_KEY = "fcc-tree-cache-v3";
 
         var KNOWN_COLORS = {
           css: "#5b9bf5",
@@ -611,33 +608,30 @@
         var TREE = null;
 
         // ============================================================
-        // CACHE (sessionStorage, 5 minuti) + revalidazione via ETag
+        // CACHE (sessionStorage) — tiene traccia dell'ultimo commit sha
         // ============================================================
         function loadCache() {
           try {
             var raw = sessionStorage.getItem(CACHE_KEY);
             if (!raw) return null;
             var parsed = JSON.parse(raw);
-            if (!parsed || !parsed.timestamp) return null;
+            if (!parsed || !parsed.sha) return null;
             return parsed;
           } catch (e) {
             return null;
           }
         }
 
-        function isCacheFresh(cached) {
-          return !!cached && Date.now() - cached.timestamp <= CACHE_TTL_MS;
-        }
-
-        function saveCache(flatList, truncated, etag) {
+        function saveCache(flatList, truncated, sha, message, dateText) {
           try {
             sessionStorage.setItem(
               CACHE_KEY,
               JSON.stringify({
-                timestamp: Date.now(),
                 tree: flatList,
                 truncated: truncated,
-                etag: etag || null,
+                sha: sha,
+                message: message,
+                date: dateText,
               }),
             );
           } catch (e) {
@@ -655,6 +649,21 @@
               "/" +
               limit +
               " richieste rimaste questa ora)";
+          }
+        }
+
+        function formatCommitDate(iso) {
+          if (!iso) return "";
+          try {
+            var d = new Date(iso);
+            return d.toLocaleString("it-IT", {
+              day: "numeric",
+              month: "short",
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+          } catch (e) {
+            return "";
           }
         }
 
@@ -831,7 +840,7 @@
           var homeLi = document.createElement("li");
           var home = document.createElement("a");
           home.href = "#";
-          home.textContent = REPO_NAME;
+          home.textContent = DISPLAY_NAME;
           if (pathSegments.length === 0) {
             home.className = "current";
             home.setAttribute("aria-current", "location");
@@ -882,7 +891,7 @@
             (folderCount === 1 ? " cartella" : " cartelle") +
             " · " +
             totalCount +
-            (totalCount === 1 ? " esercizio" : " esercizi");
+            (totalCount === 1 ? " file" : " file");
           statsBarEl.appendChild(text);
 
           var dotsWrap = document.createElement("span");
@@ -943,7 +952,7 @@
             var emptyRepo = document.createElement("p");
             emptyRepo.className = "notice";
             emptyRepo.textContent =
-              "Nessuna pagina visualizzabile trovata nel repository.";
+              "Nessun file visualizzabile trovato nel repository.";
             listingEl.appendChild(emptyRepo);
             return;
           }
@@ -974,7 +983,7 @@
             var emptyHere = document.createElement("p");
             emptyHere.className = "notice";
             emptyHere.textContent =
-              "Questa cartella non contiene pagine visualizzabili.";
+              "Questa cartella non contiene file visualizzabili.";
             listingEl.appendChild(list);
             listingEl.appendChild(emptyHere);
             return;
@@ -1139,7 +1148,7 @@
           retryBtn.className = "retry-btn";
           retryBtn.textContent = "Riprova";
           retryBtn.addEventListener("click", function () {
-            loadTreeData(true);
+            loadTreeData();
           });
           listingEl.appendChild(retryBtn);
         }
@@ -1158,69 +1167,50 @@
         }
 
         // ============================================================
-        // CARICAMENTO DATI (cache TTL + revalidazione ETag)
+        // CARICAMENTO DATI — controlla sempre l'ultimo commit; scarica
+        // l'albero completo solo se lo sha è cambiato rispetto alla cache
         // ============================================================
-        function onTreeReady(truncated, source) {
+        function onTreeReady(truncated, message, dateText) {
           listingEl.setAttribute("aria-busy", "false");
           statusEl.classList.remove("error");
           var total = countLinkable(TREE);
-          var when = new Date().toLocaleTimeString("it-IT", {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
-          var suffix;
-          if (source === "cache") suffix = " — dalla cache";
-          else if (source === "revalidated")
-            suffix = " — verificato alle " + when + ", nessuna modifica";
-          else suffix = " — aggiornato alle " + when;
+          var countText =
+            total + (total === 1 ? " file trovato" : " file trovati");
+          var msgText = message ? ' — "' + message + '"' : "";
+          var dateSuffix = dateText ? " (" + dateText + ")" : "";
           statusEl.textContent =
-            total +
-            (total === 1 ? " pagina trovata" : " pagine trovate") +
-            suffix +
-            (truncated ? " (elenco troncato: repository molto grande)" : "");
+            countText +
+            msgText +
+            dateSuffix +
+            (truncated ? " — elenco troncato: repository molto grande" : "");
           route();
         }
 
-        function fetchFresh(cachedForEtag) {
+        function fetchFresh(cachedData) {
           refreshBtn.classList.add("spinning");
           showSkeleton();
           statusEl.textContent = "Caricamento della struttura del repository…";
           statusEl.classList.remove("error");
 
-          var url =
-            "https://api.github.com/repos/" +
-            REPO_OWNER +
-            "/" +
-            REPO_NAME +
-            "/git/trees/" +
-            REPO_BRANCH +
-            "?recursive=1";
           var headers = {
             Accept: "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
           };
-          if (cachedForEtag && cachedForEtag.etag)
-            headers["If-None-Match"] = cachedForEtag.etag;
+          var commitUrl =
+            "https://api.github.com/repos/" +
+            REPO_OWNER +
+            "/" +
+            REPO_NAME +
+            "/commits/" +
+            REPO_BRANCH;
 
           function finish() {
             refreshBtn.classList.remove("spinning");
           }
 
-          fetch(url, { headers: headers })
+          fetch(commitUrl, { headers: headers })
             .then(function (res) {
               updateRateLimitInfo(res);
-
-              if (res.status === 304 && cachedForEtag) {
-                TREE = buildTree(cachedForEtag.tree);
-                saveCache(
-                  cachedForEtag.tree,
-                  cachedForEtag.truncated,
-                  cachedForEtag.etag,
-                );
-                finish();
-                onTreeReady(cachedForEtag.truncated, "revalidated");
-                return;
-              }
               if (res.status === 404)
                 throw new Error(
                   "repository non trovato — controlla username, nome del repository e branch in cima al file",
@@ -1233,15 +1223,61 @@
                 throw new Error(
                   "errore nel contattare GitHub (codice " + res.status + ")",
                 );
+              return res.json();
+            })
+            .then(function (commitData) {
+              var sha = commitData.sha;
+              var rawMessage =
+                commitData.commit && commitData.commit.message
+                  ? commitData.commit.message
+                  : "";
+              var message = rawMessage.split("\n")[0];
+              var authorDate =
+                commitData.commit && commitData.commit.author
+                  ? commitData.commit.author.date
+                  : null;
+              var dateText = formatCommitDate(authorDate);
 
-              var etag = res.headers.get("etag");
-              return res.json().then(function (data) {
-                var flat = data.tree || [];
-                saveCache(flat, !!data.truncated, etag);
-                TREE = buildTree(flat);
+              if (cachedData && cachedData.sha === sha) {
+                TREE = buildTree(cachedData.tree);
+                saveCache(
+                  cachedData.tree,
+                  cachedData.truncated,
+                  sha,
+                  message,
+                  dateText,
+                );
                 finish();
-                onTreeReady(!!data.truncated, "fresh");
-              });
+                onTreeReady(cachedData.truncated, message, dateText);
+                return;
+              }
+
+              var treeUrl =
+                "https://api.github.com/repos/" +
+                REPO_OWNER +
+                "/" +
+                REPO_NAME +
+                "/git/trees/" +
+                REPO_BRANCH +
+                "?recursive=1";
+              return fetch(treeUrl, { headers: headers })
+                .then(function (res2) {
+                  updateRateLimitInfo(res2);
+                  if (!res2.ok)
+                    throw new Error(
+                      "errore nel leggere la struttura del repository (codice " +
+                        res2.status +
+                        ")",
+                    );
+                  return res2.json();
+                })
+                .then(function (treeData) {
+                  var flat = treeData.tree || [];
+                  saveCache(flat, !!treeData.truncated, sha, message, dateText);
+                  TREE = buildTree(flat);
+                  finish();
+                  onTreeReady(!!treeData.truncated, message, dateText);
+                });
             })
             .catch(function (err) {
               finish();
@@ -1249,21 +1285,15 @@
             });
         }
 
-        function loadTreeData(forceRefresh) {
-          var cached = loadCache();
-          if (!forceRefresh && isCacheFresh(cached)) {
-            TREE = buildTree(cached.tree);
-            onTreeReady(cached.truncated, "cache");
-            return;
-          }
-          fetchFresh(cached);
+        function loadTreeData() {
+          fetchFresh(loadCache());
         }
 
         // ============================================================
         // INTERAZIONI EXTRA (aggiorna, copia link, tastiera)
         // ============================================================
         refreshBtn.addEventListener("click", function () {
-          loadTreeData(true);
+          loadTreeData();
         });
 
         copyLinkBtn.addEventListener("click", function () {
@@ -1311,7 +1341,7 @@
         window.addEventListener("hashchange", route);
         searchInput.addEventListener("input", route);
 
-        loadTreeData(false);
+        loadTreeData();
       })();
     </script>
   </body>
