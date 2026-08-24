@@ -1,0 +1,43 @@
+/*
+overflow, sia sulle X che sulle Y
+"overflow-y: hidden;"
+"overflow-y: scroll;"
+si può usare anche "auto"
+
+"transform" molto utile per modificare la presentazione visuale degli elementi, puoi ruotarli, scalarli, skewing e traslarli sia in 2d che in 3d.
+"transform: translate(50px, 100px);"  sposta l'elemento, in questo caso di 50px verso destra e 100px verso il basso (valori negativi per le direzioni opposte).
+"transform: rotate(45deg);" gira di un tot di gradi in senso orario.
+"transform: scale(1.5, 2);" ridimensiona l'elemento, in questo caso 1.5 volte più largo e 2 volte più alto.
+"transform: translate(50px, 50px) rotate(45deg) scale(1.5);" si possono combinare più trasformazioni.
+quando si usa "transform" stare attenti all'accessibilità.
+
+ogni elemento è circondato da un box, ogni box ha 4 caratteristiche: il contenuto, il padding, il bordo e il margine.
+il contenuto è la parte più interna
+il padding stra tra il contenuto e il bordo
+il bordo è la parte più esterna del box
+il margine è la parte dopo il bordo
+
+margin collapsing, quando due margini verticali (sopra e sotto) si incontrano, vince quello più grosso.
+con il padding si risolve. perché non sono più a contatto diretto.
+
+"box-sizing" può essere settata a "content-box" (default) o "border-box".
+usa "content-box" quando vuoi controllo sul contenuto perché puoi settare width e height che corrispondono alla width e height del contenuto, esclusi il padding e i border.
+usa "border-box" quando vuoi che la dimensione totale dell'elemento rimanga invariata anche quando cambi padding e border, perché in questo caso sono compresi content, padding e border, mentre il margin no.
+
+per resettare il CSS puoi fare tu stesso un tuo file oppure usare quello che si trova in giro tipo "Normalize.css", oppure puoi usare la libreria CSS "sanitize.css"
+puoi anche combinare third parts e custom.
+
+"filter" applica effetti grafici "filter: function(amount);"
+"filter: blur(2px);"
+"filter: brightness(150%);"
+"filter: grayscale(100%);" da 0% a 100%
+"filter: sepia(80%);" uguale a grayscale
+"filter: hue-rotate(90deg);" la ruota dei colori.
+"filter: contrast(150%) brightness(110%) sepia(30%);" puoi mettere insieme più effetti.
+ci sono anche "contrast", "invert" e "saturate"
+*/
+.canvas {
+  width: 500px;
+  height: 600px;
+  background-color: #4d0f00;
+}
