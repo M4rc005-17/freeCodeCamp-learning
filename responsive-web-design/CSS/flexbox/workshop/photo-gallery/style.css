@@ -1,0 +1,60 @@
+/*
+flex container: "display: flex"
+flex items: figli di flex container
+"flex-direction", "justify-content", "align-items" e "flex-wrap"
+main axis = X, cross axis = Y, di solito.
+"flex-direction" dice la direzione della main axis, il suo valore di default è "row", puoi scrivere anche "row-reverse" per invertire gli item sulla riga.
+se vuoi metterli in verticale allora dovrai dare il valore di "column" al posto di "row" e anche qua c'è il reverse.
+
+"flex-wrap" tre possibili valori: "nowrap", "wrap" e "wrap-reverse".
+"nowrap" è il default
+"wrap" gli elementi non vengono rimpiccioliti ma vengono messi su riga nuova.
+"wrap-reverse" fa il wrap al contrario
+"flw-flow" mette insieme "flex-direction" e "flex-wrap".
+"justify-content" allinea gli elementi sull'asse delle X, con "flex-start" li mette all'inizio, con "flex-end" li mette alla fine, con "center" li mette al centro, con "space-between" mette degli spazi uguali tra un elemento e l'altro, con "space-around" mette degli spazi uguali intorno agli elementi, con "space-evenly" mette degli spazi uguali tra gli elementi e i bordi del padre.
+"align-items" lavora sull'asse delle Y, per centrare gli elementi su usa "center", per metterli all'inizio "flex-start", per metterli alla fine "flex-end", per stretchare gli elementi sull'asse delle Y puoi usare "stretch" però affligge solo gli elementi che hanno height/width settata ad "auto".
+"align-self" puoi usarlo per assegnare diverse proprietà ad un singolo elemento sull'asse delle Y. puoi usare "stretch", puoi usare "center", puoi usare "flex-start", puoi usare "flex-end".
+*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f5f6f7;
+}
+
+.header {
+  text-align: center;
+  text-transform: uppercase;
+  padding: 32px;
+  background-color: #0a0a23;
+  color: #fff;
+  border-bottom: 4px solid #fdb347;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 350px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.gallery::after {
+  content: "";
+  width: 350px;
+}
